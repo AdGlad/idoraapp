@@ -11,7 +11,8 @@ Rails.application.configure do
 
   # Show full error reports.
   config.consider_all_requests_local = true
-
+  config.action_mailer.delivery_method = :test
+  config.action_mailer.default_url_options = { :host => 'https://df79057616d54d4c93329f785d71c803.vfs.cloud9.eu-west-1.amazonaws.com/'}
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
   if Rails.root.join('tmp', 'caching-dev.txt').exist?
