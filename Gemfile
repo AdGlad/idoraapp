@@ -17,6 +17,7 @@ gem 'fog', require: 'fog/aws'
 gem 'devise'
 gem 'twitter-bootstrap-rails'
 gem 'devise-bootstrap-views'
+gem 'bootstrap-sass', '~> 3.3.5'
 gem 'jquery-rails'
 # Use Puma as the app server
 gem 'puma', '~> 3.11'

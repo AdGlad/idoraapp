@@ -1,3 +1,12 @@
+$navbar-default-bg:#08088A;
+@import "bootstrap-sprockets";
+@import "bootstrap";
+#logo {
+  float: left;
+  font-size: 2.7em;
+  flont-weight: bold;
+
+}
 .user-name {
 padding: 0 !important ;
 padding-left: 5px;
@@ -60,6 +69,7 @@ color: #fff;
   text-align: center;
   background-image: asset-url('FacialRecognition.png');
   background-size: cover;
+  height: 550px;
   color: #fff;
   font-family: 'Helvetica Neue' !important;
   font-stretch: expanded;
