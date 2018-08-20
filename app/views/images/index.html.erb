@@ -16,8 +16,8 @@
       <td><%= link_to image.name, image_path(image) %></td>
       <td><%= image_tag image.picture.url, size:"100x100" %></td>
       <td>
-          <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                      edit_image_path(image), :class => 'btn btn-default btn-xs' %>
+          <%= link_to t('.edit', :default => t("helpers.links.edit")), edit_image_path(image), :class => 'btn btn-default btn-xs' %>
+          <%= link_to t('.identify', :default => t("helpers.links.identify")), identify_path(image), :class => 'btn btn-default btn-xs' %>
           <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
                       image_path(image),
                       :method => :delete,

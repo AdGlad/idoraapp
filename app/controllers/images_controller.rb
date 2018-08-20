@@ -1,5 +1,5 @@
 class ImagesController < ApplicationController
-  before_action :set_image, only: [:show, :edit, :update, :destroy]
+  before_action :set_image, only: [:check, :show, :edit, :update, :destroy]
 
   # GET /images
   # GET /images.json
@@ -60,6 +60,19 @@ class ImagesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to images_url, notice: 'Image was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def check
+    respond_to do |format|
+       if @image.matchid="'Cherry-Evans" 
+      #if @image.update(image_params)
+        format.html { redirect_to @image, notice: 'Image was successfully updated.' }
+        format.json { render :show, status: :ok, location: @image }
+      else
+        format.html { render :edit }
+        format.json { render json: @image.errors, status: :unprocessable_entity }
+      end
     end
   end
 
