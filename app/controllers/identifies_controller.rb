@@ -26,7 +26,7 @@ def show
 #imagefile="uploads/image/picture/4/Jake_Trbojevic.JPG"
 #imagefile="uploads/image/picture/4/Daily_Cherry-Evans.jpg"
 #imagefile="uploads/image/picture/" + @image.user_id.to_s + "/Jake_Trbojevic.JPG"
-
+picture = @image.picture
 imagefile="uploads/image/picture/" + @image.user_id.to_s + "/" + @image.picture.to_s
 puts "** Picture ** "
 puts picture
