@@ -1,6 +1,6 @@
 class IdentifiesController < ApplicationController
   require 'aws-sdk'
-#  before_action :set_image, only: [:show]
+  before_action :set_image, only: [:show]
 
 def search_faces_by_image(collectionname,sourcebucketname,sourcefilename)
 client = Aws::Rekognition::Client.new
