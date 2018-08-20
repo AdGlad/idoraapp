@@ -23,9 +23,9 @@ end
 
 def show
 #imagefile="uploads/image/picture/4/Jake_Trbojevic.JPG"
-imagefile="uploads/image/picture/4/Daily_Cherry-Evans.jpg"
+#imagefile="uploads/image/picture/4/Daily_Cherry-Evans.jpg"
 #imagefile="uploads/image/picture/" + @image.user_id.to_s + "/Jake_Trbojevic.JPG"
-#imagefile="uploads/image/picture/" + @image.user_id.to_s + "/" + @image.picture.to_s
+imagefile="uploads/image/picture/" + @image.user_id.to_s + "/" + @image.picture.to_s
 search_faces_by_image("ManlySeaEagles","idoraapp",imagefile)
 
 #@image.matchid="'Cherry-Evans"
