@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @identity.user %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @identity.name %>
+</p>
+
+<p>
+  <strong>Picture:</strong>
+  <%= @identity.picture %>
+</p>
+
+<p>
+  <strong>Dob:</strong>
+  <%= @identity.dob %>
+</p>
+
+<p>
+  <strong>Team:</strong>
+  <%= @identity.team %>
+</p>
+
+<p>
+  <strong>Desc:</strong>
+  <%= @identity.desc %>
+</p>
+
+<%= link_to 'Edit', edit_identity_path(@identity) %> |
+<%= link_to 'Back', identities_path %>

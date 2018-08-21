@@ -1,0 +1,76 @@
+<%= form_for @identity, :html => { multipart: true, :class => "form-horizontal identity" } do |f| %>
+
+  <% if @identity.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@identity.errors.count, "error") %> prohibited this identity from being saved:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @identity.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :name, :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.text_field :name, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:name) %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :dob, :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.text_field :dob, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:dob) %>
+  </div>
+  <div class="form-group">
+    <%= f.label :team, :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.text_field :team, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:team) %>
+  </div>
+  <div class="form-group">
+    <%= f.label :desc, :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.text_field :desc, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:desc) %>
+  </div>
+  <div class="form-group">
+    <%= f.label :picture, :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.file_field :picture, accept: 'image/jpg,image/png,image/gif' %>
+    </div>
+    <%=f.error_span(:picture) %>
+  </div>
+
+
+  <div class="form-group">
+    <div class="col-lg-offset-2 col-lg-10">
+      <%= f.submit nil, :class => 'btn btn-primary' %>
+      <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                identities_path, :class => 'btn btn-default' %>
+    </div>
+  </div>
+
+<% end %>
+
+<script type="text/javascript">
+
+$('#identity_picture').bind('change', function() {
+  var size_in_megabytes = this.files[0].size/1024/1024;
+  if (size_in_megabytes > 5) {
+    alert('Maximum file size is 5MB.');
+    }
+});
+
+</script>
+
