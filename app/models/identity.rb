@@ -20,7 +20,7 @@ private
   #def index_face(bucketname,collectionname,filename)
   #
   def index_face
-  #filename = self.picture.path.split("/").last
+  filename = self.picture.path.split("/").last
     client = Aws::Rekognition::Client.new
       resp = client.index_faces(
       {
@@ -29,19 +29,20 @@ private
         image: {
           s3_object: {
             #bucket: bucketname,
-            #name: filename,
             bucket: "manlyseaeagles",
-            name: "Brian_Kelly.JPG",
+            name: filename,
+            #name: "Brian_Kelly.JPG",
           },
         },
-        #external_image_id: filename,
-        external_image_id: "Brian_Kelly.JPG",
+        external_image_id: filename,
+        #external_image_id: "Brian_Kelly.JPG",
         detection_attributes: [
         ]
       }
              )
     self.face_id=resp.face_records[0].face.face_id
     self.external_image_id = resp.face_records[0].face.external_image_id
+    puts "**********************aws complete"
     #self.face_id="1234"
     #self.external_image_id = "Brian_Kelly.JPG"
   end
