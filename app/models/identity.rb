@@ -16,10 +16,10 @@ private
   #
   def index_face
   @user=User.find(self.user_id)
-  #collection=@user.collectionid
-  #picture = self.picture.path.split("/").last
-  #imagefile="uploads/image/picture/" + self..user_id.to_s + "/" + picture.to_s
-  #bucketname = "idoraapp"
+  collection=@user.collectionid
+  picture = self.picture.path.split("/").last
+  imagefile="uploads/identity/picture/" + self.user_id.to_s + "/" + picture.to_s
+  bucketname = "idoraapp"
   #puts "******   picture  " + picture
   #puts "******   Collection  " + collection
   #puts "******   imagefile " + imagefile
@@ -31,21 +31,23 @@ private
         collection_id: "ManlySeaEagles",
         image: {
           s3_object: {
-            #bucket: bucketname,
+            bucket: bucketname,
             #name: imagefile,
-            bucket: "manlyseaeagles",
-            name: "Brian_Kelly.JPG",
+            #bucket: "manlyseaeagles",
+            #bucket: "idoraapp",
+            #name: "Brian_Kelly.JPG",
+            name: imagefile
           },
         },
-        #external_image_id: picture,
-        external_image_id: "Brian_Kelly.JPG",
+        external_image_id: imagefile,
+        external_image_id: "player6.jpg",
         detection_attributes: [
         ]
       }
              )
     self.face_id=resp.face_records[0].face.face_id
     self.external_image_id = resp.face_records[0].face.external_image_id
-    puts filename
+    #puts filename
     puts "**********************aws complete"
     #self.face_id="1234"
     #self.external_image_id = "Brian_Kelly.JPG"

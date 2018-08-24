@@ -34,11 +34,20 @@ class IdentityUploader < CarrierWave::Uploader::Base
 #  fog_provider = 'fog/aws'
 #  storage :fog
 #  storage :file
-  if Rails.env.production?
+  # configure do |config|
+  #  config.fog_credentials = {
+  #  :provider => 'AWS',
+  #  :region                => ENV['S3_REGION'],
+  #  :aws_access_key_id => ENV['S3_ACCESS_KEY'],
+  #  :aws_secret_access_key => ENV['S3_SECRET_KEY']
+  #  }
+  #  config.fog_directory = ENV['S3_BUCKET']
+  #end
+ # if Rails.env.production?
     storage :fog
-  else
-    storage :file
-  end
+  #else
+   # storage :file
+  #end
 #    
   #storage :fog
 
@@ -46,7 +55,7 @@ class IdentityUploader < CarrierWave::Uploader::Base
   # This is a sensible default for uploaders that are meant to be mounted:
   def store_dir
     #"uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
-    "uploads/#{model.class.to_s.underscore}/#{mounted_as}/identities/#{model.user_id}"
+    "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.user_id}"
   end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:

@@ -8,13 +8,21 @@ class PictureUploader < CarrierWave::Uploader::Base
   # Choose what kind of storage to use for this uploader:
   #storage :file
   # storage :fog
-  
-  if Rails.env.production?
+  #configure do |config|
+  #  config.fog_credentials = {
+  #  :provider => 'AWS',
+  #  :region                => ENV['S3_REGION'],
+  #  :aws_access_key_id => ENV['S3_ACCESS_KEY'],
+  #  :aws_secret_access_key => ENV['S3_SECRET_KEY']
+  #  }
+  #  config.fog_directory = ENV['S3_BUCKET']
+  #end
+  #if Rails.env.production?
+   # storage :fog
+  #else
+   # storage :file
     storage :fog
-  else
-    storage :file
-    #storage :fog
-  end
+  #end
 
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
