@@ -45,5 +45,6 @@ private
     puts "**********************aws complete"
     self.face_id="1234"
     self.external_image_id = "Brian_Kelly.JPG"
+    self.save
   end
 end
