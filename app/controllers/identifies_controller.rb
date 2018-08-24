@@ -26,10 +26,7 @@ def show
 picture = @image.picture.path.split("/").last
 imagefile="uploads/image/picture/" + @image.user_id.to_s + "/" + picture.to_s
 puts picture.to_s
-puts "** Picture ** "
-puts "** Imagefile ** "
 puts imagefile
-puts "** Imagefile ** "
 search_faces_by_image("ManlySeaEagles","idoraapp",imagefile)
 
 #@image.matchid="'Cherry-Evans"

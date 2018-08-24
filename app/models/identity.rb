@@ -3,11 +3,6 @@ require 'aws-sdk'
   belongs_to :user
   mount_uploader :picture, IdentityUploader
   validate :picture_size
-  #filename = picture.path.split("/").last
-  #imagefile="uploads/image/picture/" + self.user_id.to_s + "/" + filename.to_s
-  #imagefile="uploads/image/picture/" + "1" + "/" + filename.to_s
-  #after_create index_face("manlyseaeagles","ManlySeaEagles",imagefile) 
-  #after_create :index_face("manlyseaeagles","ManlySeaEagles",filename) 
   after_create_commit :index_face
 
 private

@@ -4,14 +4,41 @@ class IdentityUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
   process resize_to_limit: [300, 300]
 
-  # Choose what kind of storage to use for this uploader:
-  storage :file
-#  if Rails.env.production?
-#    storage :fog
-#  else
-#    #storage :file
-#    storage :fog
-#  end
+#  # Choose what kind of storage to use for this uploader:
+# #CarrierWave.configure do |config|
+#
+#  #if Rails.env.development? || Rails.env.test?
+#  #  config.storage = :file
+#  #else
+#    #config.fog_provider = 'fog/aws'
+#    #config.fog_credentials = {
+#      #provider: 'AWS',
+#      #aws_access_key_id: ENV['S3_ACCESS_KEY_ID'],
+#      #aws_secret_access_key: ENV['S3_SECRET_ACCESS_KEY'],
+#      #region: ENV['S3_REGION'],
+#      #endpoint: 'https://s3.amazonaws.com'
+#    #}
+#    #config.fog_directory = ENV['S3_BUCKET']
+#    #config.fog_public = false
+#    #config.storage = :fog
+#  #end
+##end
+#  fog_credentials = {
+#      provider: 'AWS',
+#      aws_access_key_id: ENV['S3_ACCESS_KEY_ID'],
+#      aws_secret_access_key: ENV['S3_SECRET_ACCESS_KEY'],
+#      region: ENV['S3_REGION'],
+#      endpoint: 'https://s3.amazonaws.com'
+#    }
+#  fog_directory = ENV['S3_BUCKET']
+#  fog_provider = 'fog/aws'
+#  storage :fog
+#  storage :file
+  if Rails.env.production?
+    storage :fog
+  else
+#    storage :file
+  end
 #    
   #storage :fog
 
