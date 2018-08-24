@@ -15,21 +15,29 @@ private
   #def index_face(bucketname,collectionname,filename)
   #
   def index_face
-  filename = self.picture.path.split("/").last
+  @user=User.find(self.user_id)
+  collection=@user.collectionid
+  picture = self.picture.path.split("/").last
+  imagefile="uploads/image/picture/" + self..user_id.to_s + "/" + picture.to_s
+  bucketname = "idoraapp"
+  puts "******   picture  " + picture
+  puts "******   Collection  " + collection
+  puts "******   imagefile " + imagefile
+  puts "******   bucketname " + bucketname
     client = Aws::Rekognition::Client.new
       resp = client.index_faces(
       {
-        #collection_id: collectionname,
-        collection_id: "ManlySeaEagles",
+        collection_id: collection
+        #collection_id: "ManlySeaEagles",
         image: {
           s3_object: {
-            #bucket: bucketname,
-            bucket: "manlyseaeagles",
-            name: filename,
+            bucket: bucketname,
+            name: imagefile,
+            #bucket: "manlyseaeagles",
             #name: "Brian_Kelly.JPG",
           },
         },
-        external_image_id: filename,
+        external_image_id: picture,
         #external_image_id: "Brian_Kelly.JPG",
         detection_attributes: [
         ]
