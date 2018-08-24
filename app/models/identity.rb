@@ -40,11 +40,12 @@ private
         ]
       }
              )
-    #self.face_id=resp.face_records[0].face.face_id
-    #self.external_image_id = resp.face_records[0].face.external_image_id
+    self.face_id=resp.face_records[0].face.face_id
+    self.external_image_id = resp.face_records[0].face.external_image_id
+    puts filename
     puts "**********************aws complete"
-    self.face_id="1234"
-    self.external_image_id = "Brian_Kelly.JPG"
+    #self.face_id="1234"
+    #self.external_image_id = "Brian_Kelly.JPG"
     self.save
   end
 end
