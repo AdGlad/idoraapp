@@ -17,6 +17,10 @@ resp = client.search_faces_by_image({
   max_faces:1
 })
 
+puts "*********************"
+puts resp
+puts "*********************"
+
 matched_faceid= resp.face_matches[0].face.face_id
 #facematchname=Identity.where(face_id: matched_faceid).first
 @image.matchid= resp.face_matches[0].face.external_image_id
