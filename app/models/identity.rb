@@ -18,7 +18,7 @@ private
   @user=User.find(self.user_id)
   collection=@user.collectionid
   picture = self.picture.path.split("/").last
-  external_image_id= self.name
+  external_image_name= self.name
   imagefile="uploads/identity/picture/" + self.user_id.to_s + "/" + picture.to_s
   bucketname = "idorabucket"
   puts  "***** " + external_image_id  
@@ -37,9 +37,9 @@ private
             name: imagefile
           },
         },
-        external_image_id: imagefile,
+        #external_image_id: imagefile,
         #external_image_id: self.name,
-        external_image_id: "Name",
+        external_image_id: external_image_name,
         detection_attributes: [
         ]
       }
