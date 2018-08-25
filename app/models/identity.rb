@@ -32,15 +32,11 @@ private
         image: {
           s3_object: {
             bucket: bucketname,
-            #name: imagefile,
-            #bucket: "manlyseaeagles",
-            #bucket: "idorabucket",
-            #name: "Brian_Kelly.JPG",
             name: imagefile
           },
         },
         external_image_id: imagefile,
-        external_image_id: "player6.jpg",
+        external_image_id: self.name
         detection_attributes: [
         ]
       }
