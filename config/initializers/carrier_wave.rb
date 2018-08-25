@@ -7,7 +7,7 @@
      :aws_secret_access_key => ENV['S3_SECRET_KEY']
     #:region                => 'eu-west-1',
     }
-#    config.fog_directory = ENV['S3_BUCKET']
-    config.fog_directory = 'idoraapp'
+    config.fog_directory = ENV['S3_BUCKET']
+    #config.fog_directory = 'idorabucket'
   end
 #end

@@ -19,7 +19,7 @@ private
   collection=@user.collectionid
   picture = self.picture.path.split("/").last
   imagefile="uploads/identity/picture/" + self.user_id.to_s + "/" + picture.to_s
-  bucketname = "idoraapp"
+  bucketname = "idorabucket"
   #puts "******   picture  " + picture
   #puts "******   Collection  " + collection
   #puts "******   imagefile " + imagefile
@@ -34,7 +34,7 @@ private
             bucket: bucketname,
             #name: imagefile,
             #bucket: "manlyseaeagles",
-            #bucket: "idoraapp",
+            #bucket: "idorabucket",
             #name: "Brian_Kelly.JPG",
             name: imagefile
           },

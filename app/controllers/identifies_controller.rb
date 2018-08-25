@@ -27,7 +27,7 @@ picture = @image.picture.path.split("/").last
 imagefile="uploads/image/picture/" + @image.user_id.to_s + "/" + picture.to_s
 puts picture.to_s
 puts imagefile
-search_faces_by_image("ManlySeaEagles","idoraapp",imagefile)
+search_faces_by_image("ManlySeaEagles","idorabucket",imagefile)
 
 #@image.matchid="'Cherry-Evans"
 @image.save
