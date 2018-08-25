@@ -18,9 +18,9 @@ resp = client.search_faces_by_image({
 })
 
 matched_faceid= resp.face_matches[0].face.face_id
-facematchname=Identity.where(face_id: matched_faceid).first
-#@image.matchid= resp.face_matches[0].face.external_image_id
-@image.matchid= facematchname
+#facematchname=Identity.where(face_id: matched_faceid).first
+@image.matchid= resp.face_matches[0].face.external_image_id
+#@image.matchid= facematchname
 
 end
 
