@@ -22,7 +22,13 @@ puts resp
 puts "*********************"
 
 matched_faceid= resp.face_matches[0].face.face_id
-#facematchname=Identity.where(face_id: matched_faceid).first
+puts "*********************"
+puts matched_faceid
+puts "*********************"
+facematchname=Identity.where(face_id: matched_faceid).first
+puts "*********************"
+puts facematchname
+puts "*********************"
 @image.matchid= resp.face_matches[0].face.external_image_id
 #@image.matchid= facematchname
 
