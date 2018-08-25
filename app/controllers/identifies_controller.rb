@@ -27,10 +27,10 @@ puts matched_faceid
 puts "*********************"
 facematchname=Identity.where(face_id: matched_faceid).first
 puts "*********************"
-puts facematchname
+puts facematchname.name
 puts "*********************"
-@image.matchid= resp.face_matches[0].face.external_image_id
-#@image.matchid= facematchname
+#@image.matchid= resp.face_matches[0].face.external_image_id
+@image.matchid= facematchname.name
 
 end
 
