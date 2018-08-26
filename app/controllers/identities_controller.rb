@@ -4,7 +4,7 @@ class IdentitiesController < ApplicationController
   # GET /identities
   # GET /identities.json
   def index
-    @identities = Identity.all
+    @identities = Identity.where(user_id: current_user.id).paginate(page: params[:page], per_page: 5)
   end
 
   # GET /identities/1

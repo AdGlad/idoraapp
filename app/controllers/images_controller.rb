@@ -4,7 +4,7 @@ class ImagesController < ApplicationController
   # GET /images
   # GET /images.json
   def index
-    @images = Image.all
+    @images = Image.where(user_id: current_user.id).paginate(page: params[:page], per_page: 5)
   end
 
   # GET /images/1
