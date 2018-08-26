@@ -21,7 +21,6 @@ private
   #external_image_name= self.name.to_s
   imagefile="uploads/identity/picture/" + self.user_id.to_s + "/" + picture.to_s
   bucketname = "idorabucket"
-  puts  "***** " + external_image_id  
   #puts "******   picture  " + picture
   #puts "******   Collection  " + collection
   #puts "******   imagefile " + imagefile
