@@ -36,7 +36,7 @@ private
             name: imagefile
           },
         },
-        external_image_id: imagefile,
+        external_image_id: picture,
         detection_attributes: [
         ]
       }
