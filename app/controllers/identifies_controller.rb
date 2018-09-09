@@ -7,7 +7,7 @@ client = Aws::Rekognition::Client.new
 
 resp = client.search_faces_by_image({
   collection_id: collectionname,
-  face_match_threshold: 90,
+  face_match_threshold: 60,
   image: {
     s3_object: {
         bucket: sourcebucketname,
@@ -36,11 +36,15 @@ end
 
 def show
  @image = Image.find(params[:id])
+ @user = User.find(@image.user_id)
+ collectionid=@user.collectionid
 picture = @image.picture.path.split("/").last
 imagefile="uploads/image/picture/" + @image.user_id.to_s + "/" + picture.to_s
+puts " collectionid" + collectionid
 puts picture.to_s
 puts imagefile
-search_faces_by_image("ManlySeaEagles","idorabucket",imagefile)
+#search_faces_by_image("ManlySeaEagles","idorabucket",imagefile)
+search_faces_by_image(collectionid,"idorabucket",imagefile)
 
 #@image.matchid="'Cherry-Evans"
 @image.save

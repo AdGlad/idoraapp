@@ -16,20 +16,20 @@ private
   #
   def index_face
   @user=User.find(self.user_id)
-  collection=@user.collectionid
+  collectionid=@user.collectionid
   picture = self.picture.path.split("/").last
   #external_image_name= self.name.to_s
   imagefile="uploads/identity/picture/" + self.user_id.to_s + "/" + picture.to_s
   bucketname = "idorabucket"
   #puts "******   picture  " + picture
-  #puts "******   Collection  " + collection
+  #puts "******   Collection  " + collectionid
   #puts "******   imagefile " + imagefile
   #puts "******   bucketname " + bucketname
     client = Aws::Rekognition::Client.new
       resp = client.index_faces(
       {
-        #collection_id: collection
-        collection_id: "ManlySeaEagles",
+        collection_id: collectionid,
+        #collection_id: "ManlySeaEagles",
         image: {
           s3_object: {
             bucket: bucketname,
