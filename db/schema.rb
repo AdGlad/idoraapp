@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_26_033700) do
+ActiveRecord::Schema.define(version: 2018_09_15_033249) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,13 @@ ActiveRecord::Schema.define(version: 2018_08_26_033700) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "matchid"
+    t.string "faces_matched"
+    t.string "scene_matched"
+    t.string "matchid1"
+    t.string "matchid2"
+    t.string "matchid3"
+    t.string "matchid4"
+    t.string "celebrity"
     t.index ["user_id"], name: "index_images_on_user_id"
   end
 
