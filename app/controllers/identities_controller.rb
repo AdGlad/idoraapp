@@ -1,4 +1,5 @@
 class IdentitiesController < ApplicationController
+  require 'aws-sdk'
   before_action :set_identity, only: [:show, :edit, :update, :destroy]
 
   # GET /identities
@@ -55,7 +56,16 @@ class IdentitiesController < ApplicationController
   # DELETE /identities/1
   # DELETE /identities/1.json
   def destroy
-    @identity.destroy
+   client = Aws::Rekognition::Client.new
+   resp = client.delete_faces({
+      collection_id: current_user.collectionid,
+      face_ids: [@identity.face_id
+      ], 
+    })
+   puts "***** Deleted identity from collection"
+   puts resp.to_h
+
+   @identity.destroy 
     respond_to do |format|
       format.html { redirect_to identities_url, notice: 'Identity was successfully destroyed.' }
       format.json { head :no_content }
