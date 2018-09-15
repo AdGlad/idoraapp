@@ -1,7 +1,7 @@
-require 'test_helper'
+#require 'test_helper'
 
-class IdentityTest < ActiveSupport::TestCase
+#class IdentityTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end
-end
+#end

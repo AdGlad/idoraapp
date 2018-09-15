@@ -1,7 +1,7 @@
-require 'test_helper'
+#require 'test_helper'
 
-class IdentifiesControllerTest < ActionDispatch::IntegrationTest
+#class IdentifiesControllerTest < ActionDispatch::IntegrationTest
   # test "the truth" do
   #   assert true
   # end
-end
+#end

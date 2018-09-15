@@ -20,8 +20,8 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: idora 
-  username: idoraschema
+  database: idora_test
+  username: idoraschema_test
   password: Gl@d5t0ne
 
 production:

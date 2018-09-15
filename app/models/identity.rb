@@ -3,6 +3,7 @@ require 'aws-sdk'
   belongs_to :user
   mount_uploader :picture, IdentityUploader
   validate :picture_size
+  validates :name, presence: true
   after_create_commit :index_face
 
 private

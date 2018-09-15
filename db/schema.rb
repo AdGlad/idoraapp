@@ -72,7 +72,6 @@ ActiveRecord::Schema.define(version: 2018_09_15_033249) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "access"
-    t.string "collectionid"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

@@ -23,16 +23,6 @@ resp.labels.each do |label|
   puts "#{label.name}-#{label.confidence.to_i}"
 end
 
-#matched_faceid= resp.face_matches[0].face.face_id
-#puts "*********************"
-#puts matched_faceid
-#puts "*********************"
-#facematchname=Identity.where(face_id: matched_faceid).first
-#puts "*********************"
-#puts facematchname.name
-#puts "*********************"
-#@image.matchid= resp.face_matches[0].face.external_image_id
-#@image.matchid= facematchname.name
 @image.scene_matched= resp.to_h
 
 end
@@ -59,6 +49,17 @@ puts "*********************"
 resp.face_matches.each do |face_matches|
   puts "#{face_matches.face.external_image_id}-#{face_matches.face.confidence.to_i}"
 end
+matched_faceid= resp.face_matches[0].face.face_id
+#puts "*********************"
+#puts matched_faceid
+#puts "*********************"
+facematchname=Identity.where(face_id: matched_faceid).first
+#puts "*********************"
+#puts facematchname.name
+#puts "*********************"
+@image.matchid= resp.face_matches[0].face.external_image_id
+@image.matchid= facematchname.name
+@image.faces_matched= resp.to_h
 end
 
 def recognize_celebrities(sourcebucketname,sourcefilename)
