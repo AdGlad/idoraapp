@@ -16,7 +16,7 @@ resp = client.detect_labels({
 })
 
 puts "*********************"
-puts resp
+puts resp.to_h
 puts "*********************"
 
 resp.labels.each do |label|

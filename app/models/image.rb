@@ -3,6 +3,7 @@ class Image < ApplicationRecord
   mount_uploader :picture, PictureUploader
 
   validate :picture_size
+  validates :name, presence: true
 
 private
 

@@ -1,5 +1,6 @@
 class User < ApplicationRecord
-require 'aws-sdk'
+  require 'aws-sdk'
+  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   attr_accessor :collection
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -10,6 +11,10 @@ require 'aws-sdk'
   has_many :identities
   accepts_nested_attributes_for :payment
   after_create_commit :create_collection
+  validates :email, presence: true, 
+                    uniqueness: {case_sesitive: false}, 
+                    length: {minimum: 3, maximum: 50},
+                    format: {with:  VALID_EMAIL_REGEX}
  
   private
   def create_collection
