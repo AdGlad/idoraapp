@@ -10,6 +10,7 @@ class User < ApplicationRecord
   has_many :images
   has_many :identities
   accepts_nested_attributes_for :payment
+  before_save {self.email = email.downcase}
   after_create_commit :create_collection
   validates :email, presence: true, 
                     uniqueness: {case_sesitive: false}, 
