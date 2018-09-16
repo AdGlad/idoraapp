@@ -50,16 +50,25 @@ resp.face_matches.each do |face_matches|
   puts "#{face_matches.face.external_image_id}-#{face_matches.face.confidence.to_i}"
 end
 matched_faceid= resp.face_matches[0].face.face_id
-#puts "*********************"
-#puts matched_faceid
-#puts "*********************"
-facematchname=Identity.where(face_id: matched_faceid).first
-#puts "*********************"
-#puts facematchname.name
-#puts "*********************"
-@image.matchid= resp.face_matches[0].face.external_image_id
-@image.matchid= facematchname.name
-@image.faces_matched= resp.to_h
+
+if not matched_faceid.empty?
+  #puts "*********************"
+  #puts matched_faceid
+  #puts "*********************"
+  facematchname=Identity.where(face_id: matched_faceid).first
+  #puts "*********************"
+  #puts facematchname.name
+  #puts "*********************"
+  #@image.matchid=resp.face_matches[0].face.external_image_id 
+  
+  if not facematchname.name.empty?
+    @image.matchid= facematchname.name
+    @image.faces_matched= resp.to_h
+    #@imagematch = Imagematch.new(name: @image.matchid, desc: resp.face_matches[0].face.external_image_id, resp: resp.to_h, image_id: @image.id) 
+    #@imagematch.save
+  end 
+end 
+
 end
 
 def recognize_celebrities(sourcebucketname,sourcefilename)
@@ -84,21 +93,20 @@ end
 
 
 def show
- @image = Image.find(params[:id])
- @user = User.find(@image.user_id)
- collectionid=@user.collectionid
-picture = @image.picture.path.split("/").last
-imagefile="uploads/image/picture/" + @image.user_id.to_s + "/" + picture.to_s
-puts " collectionid" + collectionid
-puts picture.to_s
-puts imagefile
-#search_faces_by_image("ManlySeaEagles","idorabucket",imagefile)
-search_faces_by_image(collectionid,"idorabucket",imagefile)
-detect_labels(collectionid,"idorabucket",imagefile)
-recognize_celebrities("idorabucket",imagefile)
-
-#@image.matchid="'Cherry-Evans"
-@image.save
+  @image = Image.find(params[:id])
+  @user = User.find(@image.user_id)
+  collectionid=@user.collectionid
+  picture = @image.picture.path.split("/").last
+  imagefile="uploads/image/picture/" + @image.user_id.to_s + "/" + picture.to_s
+  puts " collectionid" + collectionid
+  puts picture.to_s
+  puts imagefile
+  #search_faces_by_image("ManlySeaEagles","idorabucket",imagefile)
+  search_faces_by_image(collectionid,"idorabucket",imagefile)
+  detect_labels(collectionid,"idorabucket",imagefile)
+  recognize_celebrities("idorabucket",imagefile)
+  #@image.matchid="'Cherry-Evans"
+  @image.save
 
 end
 
