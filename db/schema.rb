@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_15_033249) do
+ActiveRecord::Schema.define(version: 2018_09_16_045728) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,11 @@ ActiveRecord::Schema.define(version: 2018_09_15_033249) do
     t.string "face_id"
     t.string "external_image_id"
     t.index ["user_id"], name: "index_identities_on_user_id"
+  end
+
+  create_table "image_identities", force: :cascade do |t|
+    t.integer "image_id"
+    t.integer "identity_id"
   end
 
   create_table "images", force: :cascade do |t|
@@ -78,5 +83,6 @@ ActiveRecord::Schema.define(version: 2018_09_15_033249) do
   end
 
   add_foreign_key "identities", "users"
+  add_foreign_key "imagematches", "images"
   add_foreign_key "images", "users"
 end

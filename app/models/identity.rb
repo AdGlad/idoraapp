@@ -5,6 +5,8 @@ require 'aws-sdk'
   validate :picture_size
   validates :name, presence: true
   after_create_commit :index_face
+  has_many :image_identities
+  has_many :images, through: :image_identities
 
 private
 

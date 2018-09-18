@@ -1,6 +1,8 @@
 class Image < ApplicationRecord
   belongs_to :user
-  has_many :images
+  #has_many :images
+  has_many :image_identities
+  has_many :identities, through: :image_identities
   mount_uploader :picture, PictureUploader
 
   validate :picture_size
