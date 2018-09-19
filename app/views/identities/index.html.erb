@@ -18,7 +18,7 @@
     <% @identities.each do |identity| %>
       <tr>
         <td><%= identity.name %></td>
-        <td><%= image_tag(identity.picture.url, size: "100x100") if identity.picture? %></dd>
+        <td><%= image_tag(identity.picture.url, size: "50x50") if identity.picture? %></dd>
         <td><%= identity.dob %></td>
         <td><%= identity.team %></td>
         <td><%= identity.desc %></td>

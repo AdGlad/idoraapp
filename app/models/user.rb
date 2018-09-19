@@ -21,12 +21,16 @@ class User < ApplicationRecord
   def create_collection
     puts "Create collection for user [" + self.id.to_s + "]"
     client = Aws::Rekognition::Client.new
-    collectionid = "idora" + self.id.to_s
+    collectionid = "idora" + Rails.env + self.id.to_s
+
     resp = client.create_collection({
             collection_id:collectionid,
            })
+
     self.collectionid = collectionid
+
     self.save
+
   end
 
 end

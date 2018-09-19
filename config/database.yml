@@ -8,12 +8,14 @@ default: &default
   adapter: postgresql
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
+  username: postgres
+  password: 
 
 development:
   <<: *default
   database: idora 
-  username: idoraschema
-  password: Gl@d5t0ne
+  #username: idoraschema
+  #password: Gl@d5t0ne
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -21,8 +23,8 @@ development:
 test:
   <<: *default
   database: idora_test
-  username: idoraschema_test
-  password: Gl@d5t0ne
+  #username: idoraschema_test
+  #password: Gl@d5t0ne
 
 production:
   <<: *default

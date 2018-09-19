@@ -10,10 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_16_045728) do
+ActiveRecord::Schema.define(version: 2018_09_18_053543) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "article_categories", force: :cascade do |t|
+    t.integer "article_id"
+    t.integer "category_id"
+  end
 
   create_table "identities", force: :cascade do |t|
     t.bigint "user_id"
@@ -34,6 +39,17 @@ ActiveRecord::Schema.define(version: 2018_09_16_045728) do
     t.integer "identity_id"
   end
 
+  create_table "imagematches", force: :cascade do |t|
+    t.string "name"
+    t.string "desc"
+    t.string "resp"
+    t.bigint "image_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "picture"
+    t.index ["image_id"], name: "index_imagematches_on_image_id"
+  end
+
   create_table "images", force: :cascade do |t|
     t.string "name"
     t.string "picture"
@@ -41,6 +57,7 @@ ActiveRecord::Schema.define(version: 2018_09_16_045728) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "matchid"
+    t.string "facematchdetails"
     t.string "faces_matched"
     t.string "scene_matched"
     t.string "matchid1"

@@ -22,12 +22,12 @@ private
   collectionid=@user.collectionid
   picture = self.picture.path.split("/").last
   #external_image_name= self.name.to_s
-  imagefile="uploads/identity/picture/" + self.user_id.to_s + "/" + picture.to_s
+  imagefile="uploads/identity/picture/" + Rails.env + "/" + self.user_id.to_s + "/" + picture.to_s
   bucketname = "idorabucket"
-  #puts "******   picture  " + picture
-  #puts "******   Collection  " + collectionid
-  #puts "******   imagefile " + imagefile
-  #puts "******   bucketname " + bucketname
+  puts "******   picture  " + picture
+  puts "******   Collection  " + collectionid
+  puts "******   imagefile " + imagefile
+  puts "******   bucketname " + bucketname
     client = Aws::Rekognition::Client.new
       resp = client.index_faces(
       {

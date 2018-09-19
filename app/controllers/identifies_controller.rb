@@ -50,6 +50,7 @@ resp.face_matches.each do |face_matches|
   puts "#{face_matches.face.external_image_id}-#{face_matches.face.confidence.to_i}"
 end
 matched_faceid= resp.face_matches[0].face.face_id
+  puts "matched_faceid" + matched_faceid.to_s
 
 if not matched_faceid.empty?
   #puts "*********************"
@@ -60,7 +61,12 @@ if not matched_faceid.empty?
   #puts facematchname.name
   #puts "*********************"
   #@image.matchid=resp.face_matches[0].face.external_image_id 
-  
+  if not ImageIdentity.exists?(identity_id: facematchname.id)
+   @image.identities << facematchname  
+   puts "Creating match record"
+  else
+   puts "Match record already exists"
+  end
   if not facematchname.name.empty?
     @image.matchid= facematchname.name
     @image.faces_matched= resp.to_h
@@ -71,25 +77,25 @@ end
 
 end
 
-def recognize_celebrities(sourcebucketname,sourcefilename)
-  client = Aws::Rekognition::Client.new
-  
-  resp = client.recognize_celebrities({
-    image: {
-      s3_object: {
-          bucket: sourcebucketname,
-          name: sourcefilename,
-      },
-    },
-  })
-  
-  
-  resp.celebrity_faces.each do |celebrity_faces|
-    puts "#{celebrity_faces.name}-#{celebrity_faces.face.confidence.to_i}"
-    @image.celebrity= celebrity_faces.name
-  end
-end
-
+#def recognize_celebrities(sourcebucketname,sourcefilename)
+#  client = Aws::Rekognition::Client.new
+#  
+#  resp = client.recognize_celebrities({
+#    image: {
+#      s3_object: {
+#          bucket: sourcebucketname,
+#          name: sourcefilename,
+#      },
+#    },
+#  })
+#  
+#  
+#  resp.celebrity_faces.each do |celebrity_faces|
+#    puts "#{celebrity_faces.name}-#{celebrity_faces.face.confidence.to_i}"
+#    @image.celebrity= celebrity_faces.name
+#  end
+#end
+#
 
 
 def show
@@ -97,14 +103,14 @@ def show
   @user = User.find(@image.user_id)
   collectionid=@user.collectionid
   picture = @image.picture.path.split("/").last
-  imagefile="uploads/image/picture/" + @image.user_id.to_s + "/" + picture.to_s
+  imagefile="uploads/image/picture/" +  Rails.env + "/" + @image.user_id.to_s + "/" + picture.to_s
   puts " collectionid" + collectionid
   puts picture.to_s
   puts imagefile
   #search_faces_by_image("ManlySeaEagles","idorabucket",imagefile)
   search_faces_by_image(collectionid,"idorabucket",imagefile)
   detect_labels(collectionid,"idorabucket",imagefile)
-  recognize_celebrities("idorabucket",imagefile)
+#  recognize_celebrities("idorabucket",imagefile)
   #@image.matchid="'Cherry-Evans"
   @image.save
 
