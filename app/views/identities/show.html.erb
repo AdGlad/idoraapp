@@ -7,7 +7,7 @@
   <dt><strong><%= model_class.human_attribute_name(:name) %>:</strong></dt>
   <dd><%= @identity.name %></dd>
   <dt><strong><%= model_class.human_attribute_name(:picture) %>:</strong></dt>
-  <dd><%= image_tag(@identity.picture.url, size: "300x300") if @identity.picture? %></dd>
+  <dd><%= image_tag(@identity.picture.url, size: "200x200") if @identity.picture? %></dd>
   <dt><strong><%= model_class.human_attribute_name(:dob) %>:</strong></dt>
   <dd><%= @identity.dob %></dd>
   <dt><strong><%= model_class.human_attribute_name(:team) %>:</strong></dt>
@@ -15,6 +15,37 @@
   <dt><strong><%= model_class.human_attribute_name(:desc) %>:</strong></dt>
   <dd><%= @identity.desc %></dd>
 </dl>
+
+  <h5><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h5>
+  <%= will_paginate @image_identities%>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:name) %></th>
+      <th><%= model_class.human_attribute_name(:picture) %></th>
+      <th><%= model_class.human_attribute_name(:matchid) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @image_identities.each do |image| %>
+      <tr>
+      <td><%= link_to image.name, image_path(image) %></td>
+      <td><%= image_tag image.picture.url, size:"50x50" %></td>
+      <td><%= link_to image.matchid, image_path(image) %></td>
+      <td>
+          <%= link_to t('.edit', :default => t("helpers.links.edit")), edit_image_path(image), :class => 'btn btn-default btn-xs' %>
+          <%= link_to t('.identify', :default => t("helpers.links.identify")), identify_path(image), :class => 'btn btn-default btn-xs' %>
+          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                      image_path(image),
+                      :method => :delete,
+                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                      :class => 'btn btn-xs btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
 
 <%= link_to t('.back', :default => t("helpers.links.back")),
               identities_path, :class => 'btn btn-default'  %>

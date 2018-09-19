@@ -11,6 +11,8 @@ class IdentitiesController < ApplicationController
   # GET /identities/1
   # GET /identities/1.json
   def show
+     @identity = Identity.find(params[:id])
+     @image_identities = @identity.images.paginate(page: params[:page], per_page: 5)
   end
 
   # GET /identities/new

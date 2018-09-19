@@ -5,9 +5,24 @@
 <dl class="dl-horizontal">
 <dt><strong><%= model_class.human_attribute_name(:name) %>:</strong></dt>
 <dd><%= @image.name %></dd>
+<dt><strong><%= model_class.human_attribute_name(:matchid) %>:</strong></dt>
+<dd><%= @image.matchid %></dd>
+<dt><strong><%= model_class.human_attribute_name(:matchid1) %>:</strong></dt>
+<dd><%= @image.matchid1 %></dd>
+<dt><strong><%= model_class.human_attribute_name(:matchid2) %>:</strong></dt>
+<dd><%= @image.matchid2 %></dd>
+<dt><strong><%= model_class.human_attribute_name(:faces_matched) %>:</strong></dt>
+<dd><%= @image.faces_matched %></dd>
+<dt><strong><%= model_class.human_attribute_name(:celebrity) %>:</strong></dt>
+<dd><%= @image.celebrity %></dd>
+<dt><strong><%= model_class.human_attribute_name(:scene_matched) %>:</strong></dt>
+<dd><%= @image.scene_matched %></dd>
 <dt></dt>
-<dd><%= image_tag(@image.picture.url, size: "300x300") if @image.picture? %></dd>
+<dd><%= image_tag(@image.picture.url, size: "200x200") if @image.picture? %></dd>
 </dl>
+<% if @image.identities.any? %>
+  <p> Identities: <%= render @image.identities %></p>
+<% end %>
 <%= link_to t('.back', :default => t("helpers.links.back")), images_path, :class => 'btn btn-default' %>
 <%= link_to t('.edit', :default => t("helpers.links.edit")), edit_image_path(@image), :class => 'btn btn-default' %>
 <%= link_to t('.destroy', :default => t("helpers.links.destroy")), image_path(@image), :method => 'delete',
