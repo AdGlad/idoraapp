@@ -13,9 +13,9 @@ Rails.application.configure do
   config.consider_all_requests_local = true
   config.action_mailer.delivery_method = :test
   #config.action_mailer.default_url_options = { :host => 'https://df79057616d54d4c93329f785d71c803.vfs.cloud9.eu-west-1.amazonaws.com/'}
-  config.action_mailer.default_url_options = { :host => 'https://0e4a453aa16549b19db980c809edfe33.vfs.cloud9.eu-west-1.amazonaws.com/'}
+  #config.action_mailer.default_url_options = { :host => 'https://0e4a453aa16549b19db980c809edfe33.vfs.cloud9.eu-west-1.amazonaws.com/'}
   #config.action_mailer.default_url_options = { :host => 'http://localhost:3000/'}
-  #config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
   if Rails.root.join('tmp', 'caching-dev.txt').exist?

@@ -14,8 +14,8 @@ default: &default
 development:
   <<: *default
   database: idora 
-  #username: idoraschema
-  #password: Gl@d5t0ne
+  username: idoraschema
+  password: Gl@d5t0ne
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".

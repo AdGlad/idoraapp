@@ -21,6 +21,8 @@ puts "*********************"
 
 resp.labels.each do |label|
   puts "#{label.name}-#{label.confidence.to_i}"
+  @label=@image.labels.create(name: label.name)
+  @label.save
 end
 
 @image.scene_matched= resp.to_h
@@ -79,6 +81,7 @@ end
   # GET /images/1
   # GET /images/1.json
   def show
+      @labels = Label.where(image_id: @image.id).paginate(page: params[:page], per_page: 5)
   end
 
   # GET /images/new
@@ -155,7 +158,7 @@ end
       puts imagefile
   ##search_faces_by_image("ManlySeaEagles","idorabucket",imagefile)
       search_faces_by_image(collectionid,"idorabucket",imagefile)
-  #detect_labels(collectionid,"idorabucket",imagefile)
+      detect_labels(collectionid,"idorabucket",imagefile)
   ##  recognize_celebrities("idorabucket",imagefile)
   ##@image.matchid="'Cherry-Evans"
   #@image.save

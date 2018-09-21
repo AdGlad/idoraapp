@@ -4,6 +4,7 @@ class Image < ApplicationRecord
   #has_many :images
   has_many :image_identities
   has_many :identities, through: :image_identities
+  has_many :labels
   mount_uploader :picture, PictureUploader
   #after_commit :search_faces_by_image
   validate :picture_size
