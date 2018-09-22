@@ -19,9 +19,13 @@ class User < ApplicationRecord
  
   private
   def create_collection
-    puts "Create collection for user [" + self.unique_id.to_s + "]"
+    @user = User.find(self.id)
+    unique_id = @user.unique_id
+    #puts "Create collection for user [" + self.unique_id.to_s + "]"
+    puts "Create collection for user [" + unique_id.to_s + "]"
     client = Aws::Rekognition::Client.new
-    collectionid = "idora" + Rails.env + self.unique_id.to_s
+    #collectionid = "idora" + Rails.env + self.unique_id.to_s
+    collectionid = "idora" + Rails.env + unique_id.to_s
 
     resp = client.create_collection({
             collection_id:collectionid,
