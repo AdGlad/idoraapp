@@ -24,6 +24,35 @@ class PictureUploader < CarrierWave::Uploader::Base
     storage :fog
   #end
 
+  def filename
+    "#{secure_token}.#{file.extension}" if original_filename.present?
+  end
+
+  protected
+  def secure_token
+    var = :"@#{mounted_as}_secure_token"
+    model.instance_variable_get(var) or model.instance_variable_set(var, SecureRandom.uuid)
+  end
+
+  #def filename
+    #@name ||= "#{timestamp}-#{super}" if original_filename.present? and super.present?
+    ##@name ||= "#{model.id}-#{super}" if original_filename.present? and super.present?
+  #end
+
+
+#  def timestamp
+#    var = :"@#{mounted_as}_timestamp"
+#    model.instance_variable_get(var) or model.instance_variable_set(var, Time.now.to_i)
+#  end
+
+  #def filename 
+  #end
+
+  #def timestamp
+  #  var = :"@#{mounted_as}_timestamp"
+  #  model.instance_variable_get(var) or model.instance_variable_set(var, Time.now.to_i)
+  #end
+
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
   def store_dir
@@ -36,6 +65,13 @@ class PictureUploader < CarrierWave::Uploader::Base
      %w(jpg jpeg gif png)
    end
 
+  # def filename
+   #"#{model.user_id}.#{original_filename}".strip
+  # "#{model.id}.#{original_filename}".strip
+   #"#{SecureRandom.uuid}#{original_filename}".strip
+   #"#{SecureRandom.uuid}.#{file.extension}" 
+   #"#{"me"}.#{original_filename}".strip
+  # end
   # Provide a default URL as a default if there hasn't been a file uploaded:
   # def default_url(*args)
   #   # For Rails 3.1+ asset pipeline compatibility:
@@ -59,7 +95,4 @@ class PictureUploader < CarrierWave::Uploader::Base
 
   # Override the filename of the uploaded files:
   # Avoid using model.id or version_name here, see uploader/store.rb for details.
-  # def filename
-  #   "something.jpg" if original_filename
-  # end
 end

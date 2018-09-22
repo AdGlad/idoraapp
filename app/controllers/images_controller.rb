@@ -155,8 +155,8 @@ end
 
   def check
     respond_to do |format|
-       if @image.matchid="'Cherry-Evans" 
-      #if @image.update(image_params)
+       #if @image.matchid="'Cherry-Evans" 
+      if @image.update(image_params)
         format.html { redirect_to @image, notice: 'Image was successfully updated.' }
         format.json { render :show, status: :ok, location: @image }
       else
@@ -174,7 +174,6 @@ end
       imagefile="uploads/image/picture/" +  Rails.env + "/" + @user.unique_id.to_s + "/" + picture.to_s
       puts " collectionid" + collectionid
       puts imagefile
-  ##search_faces_by_image("ManlySeaEagles","idorabucket",imagefile)
       search_faces_by_image(collectionid,"idorabucket",imagefile)
       detect_labels(collectionid,"idorabucket",imagefile)
   ##  recognize_celebrities("idorabucket",imagefile)
