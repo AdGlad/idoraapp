@@ -171,7 +171,7 @@ end
       @user = User.find(@image.user_id)
       collectionid=@user.collectionid
       picture = @image.picture.path.split("/").last
-      imagefile="uploads/image/picture/" +  Rails.env + "/" + @image.user_id.to_s + "/" + picture.to_s
+      imagefile="uploads/image/picture/" +  Rails.env + "/" + @user.unique_id.to_s + "/" + picture.to_s
       puts " collectionid" + collectionid
       puts imagefile
   ##search_faces_by_image("ManlySeaEagles","idorabucket",imagefile)

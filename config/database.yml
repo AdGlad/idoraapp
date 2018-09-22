@@ -23,6 +23,8 @@ development:
 test:
   <<: *default
   database: idora_test
+  username: idoraschema
+  password: Gl@d5t0ne
   #username: idoraschema_test
   #password: Gl@d5t0ne
 

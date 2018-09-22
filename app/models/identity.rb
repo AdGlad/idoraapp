@@ -22,9 +22,12 @@ private
   collectionid=@user.collectionid
   picture = self.picture.path.split("/").last
   #external_image_name= self.name.to_s
-  imagefile="uploads/identity/picture/" + Rails.env + "/" + self.user_id.to_s + "/" + picture.to_s
+  #imagefile="uploads/identity/picture/" + Rails.env + "/" + self.user_id.to_s + "/" + picture.to_s
+  user_unique_id = @user.unique_id.to_s
+  imagefile="uploads/identity/picture/" + Rails.env + "/" + user_unique_id + "/" + picture.to_s
   bucketname = "idorabucket"
   puts "******   picture  " + picture
+  puts "******   user_unique_id  " + user_unique_id
   puts "******   Collection  " + collectionid
   puts "******   imagefile " + imagefile
   puts "******   bucketname " + bucketname

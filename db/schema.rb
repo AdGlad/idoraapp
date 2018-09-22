@@ -10,10 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_21_042546) do
+ActiveRecord::Schema.define(version: 2018_09_22_032106) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "uuid-ossp"
 
   create_table "article_categories", force: :cascade do |t|
     t.integer "article_id"
@@ -62,6 +63,7 @@ ActiveRecord::Schema.define(version: 2018_09_21_042546) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "matchid"
+    t.string "facematchdetails"
     t.string "faces_matched"
     t.string "scene_matched"
     t.string "matchid1"
@@ -69,7 +71,6 @@ ActiveRecord::Schema.define(version: 2018_09_21_042546) do
     t.string "matchid3"
     t.string "matchid4"
     t.string "celebrity"
-    t.string "facematchdetails"
     t.index ["user_id"], name: "index_images_on_user_id"
   end
 
@@ -89,12 +90,11 @@ ActiveRecord::Schema.define(version: 2018_09_21_042546) do
   end
 
   create_table "tags", force: :cascade do |t|
-    t.string "Tag"
     t.string "name"
+    t.string "tag_type"
     t.string "desc"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "tag_type"
   end
 
   create_table "users", force: :cascade do |t|
@@ -116,8 +116,12 @@ ActiveRecord::Schema.define(version: 2018_09_21_042546) do
     t.datetime "updated_at", null: false
     t.string "access"
     t.string "collectionid"
+    t.uuid "unique_id", default: -> { "uuid_generate_v4()" }
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "uuid_extensions", force: :cascade do |t|
   end
 
   add_foreign_key "identities", "users"

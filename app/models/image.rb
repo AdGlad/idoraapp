@@ -24,7 +24,9 @@ private
     collectionid=@user.collectionid 
     client = Aws::Rekognition::Client.new
     bucketname= "idorabucket"
-    imagefile="uploads/image/picture/" +  Rails.env + "/" + self.user_id.to_s + "/" + picture.to_s
+    user_unique_id = @user.unique_id.to_s
+    imagefile="uploads/image/picture/" +  Rails.env + "/" + user_unique_id + "/" + picture.to_s
+    #imagefile="uploads/image/picture/" +  Rails.env + "/" + self.user_id.to_s + "/" + picture.to_s
     #imagefile="uploads/image/picture/development/3/player16.jpg"
     resp = client.search_faces_by_image({
                    collection_id: collectionid,
