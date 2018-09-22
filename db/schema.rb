@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_20_234759) do
+ActiveRecord::Schema.define(version: 2018_09_21_042546) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,6 +37,11 @@ ActiveRecord::Schema.define(version: 2018_09_20_234759) do
   create_table "image_identities", force: :cascade do |t|
     t.integer "image_id"
     t.integer "identity_id"
+  end
+
+  create_table "image_tags", force: :cascade do |t|
+    t.integer "image_id"
+    t.integer "tag_id"
   end
 
   create_table "imagematches", force: :cascade do |t|
@@ -81,6 +86,15 @@ ActiveRecord::Schema.define(version: 2018_09_20_234759) do
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string "Tag"
+    t.string "name"
+    t.string "desc"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "tag_type"
   end
 
   create_table "users", force: :cascade do |t|

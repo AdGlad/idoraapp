@@ -19,11 +19,29 @@ puts "*********************"
 puts resp.to_h
 puts "*********************"
 
-resp.labels.each do |label|
-  puts "#{label.name}-#{label.confidence.to_i}"
-  @label=@image.labels.create(name: label.name)
-  @label.save
-end
+  image_id = @image.id
+  resp.labels.each do |label|
+    puts "#{label.name}-#{label.confidence.to_i}"
+    tagname=label.name
+
+    if not tagname.empty?
+      if not Tag.exists?(name:tagname)
+        Tag.create(name:tagname, tag_type:"AWS", desc:tagname)
+        puts "Creating tag record"
+      else
+        puts "Tag record already exists"
+      end
+  
+      tagrec=Tag.where(name:tagname).first
+  
+      if not ImageTag.exists?(image_id: image_id, tag_id: tagrec.id)
+        @image.tags << tagrec
+        puts "Creating tag matchrecord"
+      else
+        puts "Tag Match record already exists"
+      end
+    end
+  end
 
 @image.scene_matched= resp.to_h
 
@@ -49,7 +67,7 @@ def search_faces_by_image(collectionname,sourcebucketname,sourcefilename)
 
   matched_faceid= resp.face_matches[0].face.face_id
   puts "matched_faceid" + matched_faceid.to_s
- image_id = @image.id
+  image_id = @image.id
   if not matched_faceid.empty?
     facematchname=Identity.where(face_id: matched_faceid).first
     #@image.matchid=resp.face_matches[0].face.external_image_id 

@@ -29,6 +29,11 @@ class PictureUploader < CarrierWave::Uploader::Base
   def store_dir
     "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{Rails.env}/#{model.user_id}"
   end
+  # Add a white list of extensions which are allowed to be uploaded.
+  # For images you might use something like this:
+   def extension_whitelist
+     %w(jpg jpeg gif png)
+   end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:
   # def default_url(*args)
@@ -50,11 +55,6 @@ class PictureUploader < CarrierWave::Uploader::Base
   #   process resize_to_fit: [50, 50]
   # end
 
-  # Add a white list of extensions which are allowed to be uploaded.
-  # For images you might use something like this:
-   def extension_whitelist
-     %w(jpg jpeg gif png)
-   end
 
   # Override the filename of the uploaded files:
   # Avoid using model.id or version_name here, see uploader/store.rb for details.

@@ -2,6 +2,8 @@ class Image < ApplicationRecord
   require 'aws-sdk'
   belongs_to :user
   #has_many :images
+  has_many :image_tags
+  has_many :tags, through: :image_tags
   has_many :image_identities
   has_many :identities, through: :image_identities
   has_many :labels
@@ -22,8 +24,8 @@ private
     collectionid=@user.collectionid 
     client = Aws::Rekognition::Client.new
     bucketname= "idorabucket"
-    #imagefile="uploads/image/picture/" +  Rails.env + "/" + self.user_id.to_s + "/" + picture.to_s
-    imagefile="uploads/image/picture/development/3/player16.jpg"
+    imagefile="uploads/image/picture/" +  Rails.env + "/" + self.user_id.to_s + "/" + picture.to_s
+    #imagefile="uploads/image/picture/development/3/player16.jpg"
     resp = client.search_faces_by_image({
                    collection_id: collectionid,
                    face_match_threshold: 60,
