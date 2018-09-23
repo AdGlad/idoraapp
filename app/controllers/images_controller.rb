@@ -61,9 +61,9 @@ def search_faces_by_image(collectionname,sourcebucketname,sourcefilename)
     },
     max_faces:10
     })
+
   resp.face_matches.each do |face_matches|
     puts "#{face_matches.face.external_image_id}-#{face_matches.face.confidence.to_i}"
-  end
 
   matched_faceid= resp.face_matches[0].face.face_id
   puts "matched_faceid" + matched_faceid.to_s
@@ -87,6 +87,8 @@ def search_faces_by_image(collectionname,sourcebucketname,sourcefilename)
     @image.save
 
   end
+  end
+
 end
   #
     # GET /images
