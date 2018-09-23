@@ -8,6 +8,7 @@
       <th>Name</th>
       <th>Type</th>
       <th>Desc</th>
+      <th>Count</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -18,6 +19,7 @@
         <td><%= tag.name %></td>
         <td><%= tag.tag_type %></td>
         <td><%= tag.desc %></td>
+        <td><%= link_to  pluralize(tag.images.count,"images"), tag %></td>
         <td><%= link_to 'Show', tag %></td>
         <td><%= link_to 'Edit', edit_tag_path(tag) %></td>
         <td><%= link_to 'Destroy', tag, method: :delete, data: { confirm: 'Are you sure?' } %></td>
