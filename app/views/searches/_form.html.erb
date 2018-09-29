@@ -1,0 +1,63 @@
+<%= form_for @search, :html => { multipart: true, :class => "form-horizontal search" } do |f| %>
+
+  <% if @search.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+    <div class="panel-heading">
+    <h3 class="panel-title"><%= pluralize(@search.errors.count, "error") %> prohibited this search from being saved:</h3>
+    </div>
+    <div class="panel-body">
+    <ul>
+    <% @search.errors.full_messages.each do |msg| %>
+    <li><%= msg %></li>
+    <% end %>
+    </ul>
+    </div>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :id1, 'Identity 1', :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+    <%= f.select  :id1, options_for_select(@identities), :include_blank =>true , :class => 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :id2, 'Identity 2', :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+    <%= f.select  :id2, options_for_select(@identities), :include_blank =>true , :class => 'form-control' %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :tag1, 'Tag 1', :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+    <%= f.select  :tag1, options_for_select(@tags), :include_blank =>true , :class => 'form-control' %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :tag2, 'Tag 2', :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+    <%= f.select  :tag2, options_for_select(@tags), :include_blank =>true , :class => 'form-control' %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :tag3, 'Tag 3', :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+    <%= f.select  :tag3, options_for_select(@tags), :include_blank =>true , :class => 'form-control' %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :tag4, 'Tag 4', :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+    <%= f.select  :tag4, options_for_select(@tags), :include_blank =>true , :class => 'form-control' %>
+    </div>
+  </div>
+
+  <%= f.submit "Search", :class => 'btn btn-primary' %>
+  <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+  searches_path, :class => 'btn btn-default' %>
+  <% end %>
+

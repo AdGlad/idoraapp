@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  idwc: MyString
+  ,id1: MyString
+  ,id2: MyString
+  ,tagwc: MyString
+  ,tag1: MyString
+  ,tag2: MyString
+  ,tag3: MyString
+  ,tag4: MyString
+  ,tag5: MyString
+
+two:
+  idwc: MyString
+  ,id1: MyString
+  ,id2: MyString
+  ,tagwc: MyString
+  ,tag1: MyString
+  ,tag2: MyString
+  ,tag3: MyString
+  ,tag4: MyString
+  ,tag5: MyString
