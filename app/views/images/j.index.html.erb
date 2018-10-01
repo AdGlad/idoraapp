@@ -3,7 +3,7 @@
   <h2><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h2>
 </div>
   <div align="center">
-  <%= will_paginate @image_tags%>
+  <%= will_paginate %>
   </div>
 <table class="table table-striped">
   <thead>
@@ -15,7 +15,7 @@
     </tr>
   </thead>
   <tbody>
-    <% @image_tags.each do |image| %>
+    <% @images.each do |image| %>
       <tr>
       <td><%= link_to image.name, image_path(image) %></td>
       <td><%= image_tag image.picture.url, size:"50x50" %></td>
@@ -33,7 +33,9 @@
     <% end %>
   </tbody>
 </table>
+<%= form_for Image.new do |f| %>
+  <%= f.label :picture, "Upload images:" %>
+  <%= f.file_field :picture , multiple: true, name: "image[picture]"%>
+<% end %>
 
-<%= link_to t('.new', :default => t("helpers.links.new")),
-            new_image_path,
-            :class => 'btn btn-primary' %>
+

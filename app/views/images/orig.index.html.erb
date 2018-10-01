@@ -34,9 +34,4 @@
   </tbody>
 </table>
 
-
-<%= form_for Image.new do |f| %>
-  <%= f.label :picture, "Upload images:" %>
-  <%= f.file_field :picture, multiple: true, name: "image[picture]"%>
-<% end %>
-
+<%= link_to t('.new', :default => t("helpers.links.new")), new_image_path, :class => 'btn btn-primary' %>

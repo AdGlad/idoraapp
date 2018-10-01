@@ -8,8 +8,14 @@ class Image < ApplicationRecord
   has_many :identities, through: :image_identities
   has_many :labels
   mount_uploader :picture, PictureUploader
-  validate :picture_size
-  validates :name, presence: true
+  #validate :picture_size
+  #validates :name, presence: true
+
+  before_create :default_name
+  
+  def default_name
+    self.name ||= File.basename(picture.filename, '.*').titleize if picture
+  end
 
 private
   def picture_size

@@ -119,16 +119,20 @@ end
 
     @image = Image.new(image_params)
     @image.user = current_user
+    @image.save
+    #@image = Image.create(params[:image])
+    #@image = Image.create(image_params)
 
     respond_to do |format|
       if @image.save
-        format.html { redirect_to @image, notice: 'Image was successfully created.' }
-        format.json { render :show, status: :created, location: @image }
+        format.html { redirect_to @image, notice: 'image was successfully created.' }
+        format.json { render :show, status: :created, location: imageidentity }
       else
         format.html { render :new }
         format.json { render json: @image.errors, status: :unprocessable_entity }
       end
     end
+
   end
 
   # PATCH/PUT /images/1
@@ -192,6 +196,7 @@ end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def image_params
+      #params.require(:image).permit(:name, :picture, :user_id,:image[])
       params.require(:image).permit(:name, :picture, :user_id)
     end
 end
