@@ -1,8 +1,4 @@
 <%- model_class = Identity -%>
-<div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human.titleize %></h1>
-</div>
-
 <dl class="dl-horizontal">
   <dt><strong><%= model_class.human_attribute_name(:name) %>:</strong></dt>
   <dd><%= @identity.name %></dd>
@@ -21,20 +17,15 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th><%= model_class.human_attribute_name(:name) %></th>
       <th><%= model_class.human_attribute_name(:picture) %></th>
-      <th><%= model_class.human_attribute_name(:matchid) %></th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
   <tbody>
     <% @image_identities.each do |image| %>
       <tr>
-      <td><%= link_to image.name, image_path(image) %></td>
       <td><%= image_tag image.picture.url, size:"50x50" %></td>
-      <td><%= link_to image.matchid, image_path(image) %></td>
       <td>
-          <%= link_to t('.edit', :default => t("helpers.links.edit")), edit_image_path(image), :class => 'btn btn-default btn-xs' %>
           <%= link_to t('.image', :default => t("helpers.links.image")), image_path(image), :class => 'btn btn-default btn-xs' %>
           <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
                       image_path(image),
