@@ -11,7 +11,7 @@ class TagsController < ApplicationController
   # GET /tags/1.json
   def show
     @tag = Tag.find(params[:id])
-    @image_tags = @tag.images.paginate(page: params[:page], per_page: 5)
+    @images = @tag.images.paginate(page: params[:page], per_page: 5)
   end
 
   # GET /tags/new
