@@ -14,6 +14,9 @@ end
 
 def show
   @search=Search.find(params[:id])
+  #@search=Search.paginate(page: params[:page], per_page: 5).where(id: params[:id])
+  #@search=Search.where(id: params[:id]).paginate(page: params[:page], per_page: 5)
+  @images=@search.search_images
 end
 
 
