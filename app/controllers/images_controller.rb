@@ -62,33 +62,55 @@ def search_faces_by_image(collectionname,sourcebucketname,sourcefilename)
     max_faces:10
     })
 
-  resp.face_matches.each do |face_matches|
-    puts "#{face_matches.face.external_image_id}-#{face_matches.face.confidence.to_i}"
+  puts "Number of face matches [" + resp.face_matches.count.to_s + "]"
+  
+  if resp.face_matches.count > 0
 
-  matched_faceid= resp.face_matches[0].face.face_id
-  puts "matched_faceid" + matched_faceid.to_s
-  image_id = @image.id
-  if not matched_faceid.empty?
-    facematchname=Identity.where(face_id: matched_faceid).first
-    #@image.matchid=resp.face_matches[0].face.external_image_id 
-    if not ImageIdentity.exists?(image_id: image_id, identity_id: facematchname.id)
-      @image.identities << facematchname
-      puts "Creating match record"
-    else
-      puts "Match record already exists"
+    resp.face_matches.each do |face_matches|
+
+      puts "#{face_matches.face.external_image_id}-#{face_matches.face.confidence.to_i}"
+      matched_faceid= resp.face_matches[0].face.face_id
+      puts "matched_faceid" + matched_faceid.to_s
+      image_id = @image.id
+      if not matched_faceid.empty?
+        facematchname=Identity.where(face_id: matched_faceid).first
+        if not ImageIdentity.exists?(image_id: image_id, identity_id: facematchname.id)
+            @image.identities << facematchname
+            puts "Creating match record"
+        else
+            puts "Match record already exists"
+        end
+      
+        if not facematchname.name.empty?
+            @image.matchid= facematchname.name
+            @image.faces_matched= resp.to_h
+        end
+  
+        @image.save
+      
+      end
     end
+  else
+   puts "No image face matched. Creating new identity"
 
-    if not facematchname.name.empty?
-      @image.matchid= facematchname.name
-      @image.faces_matched= resp.to_h
-      #@imagematch = Imagematch.new(name: @image.matchid, desc: resp.face_matches[0].face.external_image_id, resp: resp.to_h, image_id: @image.id) 
-      #@imagematch.save
-    end
-    @image.save
+   source_bucket_name = "idorabucket"
+   target_bucket_name = "idorabucket"
+   source_picture = @image.picture.path.split("/").last
+   source_key = "uploads/image/picture/" +  Rails.env + "/" + @user.unique_id.to_s + "/" + source_picture.to_s
+   target_key = "uploads/identity/picture/" +  Rails.env + "/" + @user.unique_id.to_s + "/" + source_picture.to_s
+   puts "target key [" + target_key + "]"
+   puts "source key [" + source_key + "]"
 
+   s3 = Aws::S3::Client.new(region: 'eu-west-1')
+   s3.copy_object({bucket: target_bucket_name, copy_source: source_bucket_name + '/' + source_key, key: target_key})
+   puts "Copying file #{source_key} to #{target_key}."
+
+   Identity.create(user_id: current_user.id, name: "Unknown", picture: @image.picture)
+   puts "Creating identity record"
+   collectionid=@user.collectionid
+   search_faces_by_image(collectionid,"idorabucket",source_key)
   end
-  end
-
+  
 end
   #
     # GET /images
