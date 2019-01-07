@@ -183,7 +183,6 @@ end
 
   def check
     respond_to do |format|
-       #if @image.matchid="'Cherry-Evans" 
       if @image.update(image_params)
         format.html { redirect_to @image, notice: 'Image was successfully updated.' }
         format.json { render :show, status: :ok, location: @image }
@@ -204,9 +203,6 @@ end
       puts imagefile
       search_faces_by_image(collectionid,"idorabucket",imagefile)
       detect_labels(collectionid,"idorabucket",imagefile)
-  ##  recognize_celebrities("idorabucket",imagefile)
-  ##@image.matchid="'Cherry-Evans"
-  #@image.save
       render "show"
   end
 
@@ -218,7 +214,6 @@ end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def image_params
-      #params.require(:image).permit(:name, :picture, :user_id,:image[])
       params.require(:image).permit(:name, :picture, :user_id)
     end
 end
