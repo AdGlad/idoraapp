@@ -19,11 +19,12 @@ private
   def index_face
   @user=User.find(self.user_id)
   collectionid=@user.collectionid
+  puts "******   picture  " + picture.to_s
   picture = self.picture.path.split("/").last
   user_unique_id = @user.unique_id.to_s
   imagefile="uploads/identity/picture/" + Rails.env + "/" + user_unique_id + "/" + picture.to_s
   bucketname = "idorabucket"
-  puts "******   picture  " + picture
+  puts "******   picture  " + picture.to_s
   puts "******   user_unique_id  " + user_unique_id
   puts "******   Collection  " + collectionid
   puts "******   imagefile " + imagefile

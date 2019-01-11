@@ -58,14 +58,20 @@ class IdentitiesController < ApplicationController
   # DELETE /identities/1
   # DELETE /identities/1.json
   def destroy
-   client = Aws::Rekognition::Client.new
-   resp = client.delete_faces({
-      collection_id: current_user.collectionid,
-      face_ids: [@identity.face_id
-      ], 
-    })
-   puts "***** Deleted identity from collection"
-   puts resp.to_h
+    identityface_id = @identity.face_id
+
+   if identityface_id.empty?
+     puts "No face id found"
+   else
+     client = Aws::Rekognition::Client.new
+     resp = client.delete_faces({
+        collection_id: current_user.collectionid,
+        face_ids: [@identity.face_id
+        ], 
+      })
+     puts "***** Deleted identity from collection"
+     puts resp.to_h
+   end if
 
    @identity.destroy 
     respond_to do |format|

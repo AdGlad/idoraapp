@@ -71,28 +71,6 @@ def create_face_match_record(matchedfaceid,match_response)
         @image.save
     end
 end
-def multiple_create_face_match_record(matchedfaceid,match_response)
- 
-      ##matched_faceid= resp.face_matches[0].face.face_id
-      #matched_faceid= face_matches.face.face_id
-      image_id = @image.id
-      if not matchedfaceid.empty?
-        facematchname=Identity.where(face_id: matchedfaceid).first
-        if not ImageIdentity.exists?(image_id: image_id, identity_id: facematchname.id)
-            puts "Creating match record"
-            @image.identities << facematchname
-        else
-            puts "Match record already exists"
-        end
-      
-        if not facematchname.name.empty?
-            @image.matchid= facematchname.name
-            @image.faces_matched=match_response.to_h
-        end
-  
-        @image.save
-    end
-end
 
 def create_identity_from_image(collectionname,bucketname,sourcefilename)
   puts "########################################################################"
@@ -104,9 +82,27 @@ def create_identity_from_image(collectionname,bucketname,sourcefilename)
 
    s3 = Aws::S3::Client.new(region: 'eu-west-1')
 
-   imageFile = MiniMagick::Image.open("https://s3-eu-west-1.amazonaws.com/" + bucketname + "/" + sourcefilename)
-   Identity.create(user_id: current_user.id, name: "Unknown Person", picture:  imageFile)
-   search_faces_by_image(collectionname,bucketname,sourcefilename)
+   #imageFile = MiniMagick::Image.open("https://s3-eu-west-1.amazonaws.com/" + bucketname + "/" + sourcefilename)
+   #imageFile = MiniMagick::Image.open("https://s3-eu-west-1.amazonaws.com/idorabucket/uploads/identity/picture/development/80300a88-982a-44ac-99e1-fcfc5d30d7ca/3f42f996-c318-4464-aa81-bfcd0326f8e0.JPG")
+   #imageFile = MiniMagick::Image.open("https://s3-eu-west-1.amazonaws.com/idorabucket/uploads/identity/picture/development/80300a88-982a-44ac-99e1-fcfc5d30d7ca/temp/19857c6ab-c30d-4158-a30a-d554cf3a4544.jpeg")
+   source_picture = sourcefilename.split("/").last
+   #source_key = sourcefilename
+   #target_key = "uploads/identity/picture/" +  Rails.env + "/" + @user.unique_id.to_s + "/" + source_picture.to_s
+   #s3.copy_object({bucket: bucketname, copy_source: bucketname + '/' + source_key, key: target_key})
+   #puts "source_key" + source_key
+   puts "source_picture" + source_picture
+   puts "@image.picture" + @image.picture.to_s
+    #source_picture= "https://s3-eu-west-1.amazonaws.com/" + bucketname + "/" + sourcefilename
+   #source_picture= "https://idorabucket.s3.amazonaws.com/" + sourcefilename
+   #target_picture= "https://idorabucket.s3.amazonaws.com/" + target_key
+   target_picture= source_picture
+   puts "target_picture" + target_picture
+   #Identity.create(user_id: current_user.id, name: "Unknown", picture: @image.picture)
+   #Identity.create(user_id: current_user.id, name: "Unknown", picture: sourcefilename)
+   testfile = File.open("/tmp/1_85af3eb6-a27d-4f9e-baaa-7f0eac3d5468.jpeg")
+   Identity.create(user_id: current_user.id, name: "testfile", picture:  testfile)
+   collectionid=@user.collectionid
+   search_faces_by_image(collectionid,bucketname,sourcefilename)
 
 end
 def multiple_create_identity_from_image(collectionname,bucketname,sourcefilename,localImage)
@@ -124,11 +120,9 @@ def multiple_create_identity_from_image(collectionname,bucketname,sourcefilename
    puts "@image.picture" + @image.picture.to_s
    target_picture= source_picture
    puts "target_picture" + target_picture
-   Identity.create(user_id: current_user.id, name: "Unknown", picture:  localImage)
+   Identity.create(user_id: current_user.id, name: "testfile", picture:  localImage)
    collectionid=@user.collectionid
-   picture = @image.picture.path.split("/").last
-   imagefile="uploads/image/picture/" +  Rails.env + "/" + @user.unique_id.to_s + "/" + picture.to_s
-   search_faces_by_image(collectionid,bucketname,imagefile)
+   #search_faces_by_image(collectionid,bucketname,sourcefilename)
 
 end
 
@@ -146,49 +140,54 @@ def multiple_faces(collectionid,bucketname,imagefile,resp)
   collectionid=@user.collectionid
   source_picture = @image.picture.path.split("/").last
   originalImage = MiniMagick::Image.open("https://s3-eu-west-1.amazonaws.com/" + bucketname + "/" + imagefile)
+  puts "Image width [" + originalImage.width.to_s + "]"
+  puts "Image height [" + originalImage.height.to_s + "]"
 
   imagewidth= originalImage.width
   imageheight= originalImage.height
 
   face_number = 0
   resp.face_details.each do |face|
-    face_number = face_number + 1
-    #
-    ## Open orginal image file to create local copy for manipulation
-    #
+    #localImage=MiniMagick::Image.open("https://s3-eu-west-1.amazonaws.com/" + bucketname + "/" + imagefile,ext="jpg")
     localImage=MiniMagick::Image.open("https://s3-eu-west-1.amazonaws.com/" + bucketname + "/" + imagefile)
     localImage.format('jpg')
-    #
-    ## Calculate dimensions for bounding box
-    #
+    puts "localImage.path [" + localImage.path + "]"
+    face_number = face_number + 1
     left = imagewidth *  face.bounding_box.left - (0.1 * imagewidth *  face.bounding_box.width)
     top = imageheight * face.bounding_box.top - (0.1 * imageheight *  face.bounding_box.height)
     width = imagewidth * face.bounding_box.width * 1.2
     height = imageheight * face.bounding_box.height * 1.2
+    #
+    puts "Heigth [" + height.to_s + "]"
+    puts "Width [" + width.to_s + "]"
+    puts "Left [" + left.to_s + "]"
+    puts "Top [" + top.to_s + "]"
+
     cropdimensions = width.to_i.to_s + "x" + height.to_i.to_s + "+" + left.to_i.to_s + "+" + top.to_i.to_s
-    #
-    ## Make box bigger to include more face and crop image
-    #
     resizedimensions = (2*width).to_i.to_s + "x" + (2*height).to_i.to_s 
+    puts "resizedimensions [" + resizedimensions  + "]"
+    puts "cropdimensions [" + cropdimensions  + "]"
     localImage.crop cropdimensions
     localImage.resize('612x612')
     faceCropImageFilename = "/tmp/"+ face_number.to_s + "_"  + source_picture  
+    puts "faceCropImageFilename [" + faceCropImageFilename + "]"
     localImage.write(faceCropImageFilename)
-    # 
-    ## Generate s3 temp file for recognition before creating identity
-    # 
     source_picture = @image.picture.path.split("/").last
     sourcefilename= "uploads/identity/picture/" +  Rails.env + "/" + @user.unique_id.to_s + "/temp/" + face_number.to_s + ""  + source_picture.to_s
    
-    puts "upload sourcefilename to s3 temp[" + sourcefilename + "]"
+    puts "sourcefilename[" + sourcefilename + "]"
     obj = s3.bucket(bucketname).object(sourcefilename)
     obj.upload_file(faceCropImageFilename )
+    #FileUtils.rm(newImageFilename)
+    #FileUtils.rm(newImage.path )
 
+    puts "########"
+    puts "collectionid" + collectionid.to_s
+    puts "bucketname" + bucketname
+    puts "sourcefilename" + sourcefilename
+    puts "########"
     #search_faces_by_image(collectionid,bucketname,sourcefilename)
     multiple_search_faces_by_image(collectionid,bucketname,sourcefilename,localImage)
-    # Delete temp file from s3
-    puts "delete sourcefilename from s3 temp[" + sourcefilename + "]"
-    obj.delete
 
   end
 end
@@ -379,15 +378,13 @@ end
 
       if resp_detect_faces.face_details.count < 1
         puts "No faces in image"
-        detect_labels(collectionid,bucketname,imagefile)
       elsif resp_detect_faces.face_details.count > 1
         puts "Multiple faces in image"
         multiple_faces(collectionid,bucketname,imagefile,resp_detect_faces)
-        detect_labels(collectionid,bucketname,imagefile)
       else
         puts "Single face in image"
-        search_faces_by_image(collectionid,bucketname,imagefile)
-        detect_labels(collectionid,bucketname,imagefile)
+  #      search_faces_by_image(collectionid,bucketname,imagefile)
+   #     detect_labels(collectionid,bucketname,imagefile)
       end if
 
       render "show"
