@@ -359,7 +359,7 @@ end
       #
       #
       bucketname="idorabucket"
-      client = Aws::Rekognition::Client.new
+      clientrek = Aws::Rekognition::Client.new
       puts "####### On press of Match button"
       @image = Image.find(params[:id])
       @user = User.find(@image.user_id)
@@ -369,7 +369,7 @@ end
       imagefile="uploads/image/picture/" +  Rails.env + "/" + @user.unique_id.to_s + "/" + picture.to_s
       puts imagefile
 
-      resp_detect_faces = client.detect_faces({
+      resp_detect_faces = clientrek.detect_faces({
         image: {
           s3_object: {
               bucket: bucketname,
