@@ -173,7 +173,9 @@ def multiple_faces(collectionid,bucketname,imagefile,resp)
     localImage.crop cropdimensions
     localImage.resize('612x612')
     faceCropImageFilename = "/tmp/"+ face_number.to_s + "_"  + source_picture  
-    localImage.write(faceCropImageFilename)
+    # File.open( File.join(Rails.root, "/app/assets/images/seed/#{file_name}.jpg"))
+    #localImage.write(faceCropImageFilename)
+    localImage.write(File.join(Rails.root,faceCropImageFilename))
     # 
     ## Generate s3 temp file for recognition before creating identity
     # 
