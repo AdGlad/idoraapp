@@ -381,15 +381,15 @@ end
 
       if resp_detect_faces.face_details.count < 1
         puts "No faces in image"
-        detect_labels(collectionid,bucketname,imagefile)
+        #detect_labels(collectionid,bucketname,imagefile)
       elsif resp_detect_faces.face_details.count > 1
         puts "Multiple faces in image"
-        multiple_faces(collectionid,bucketname,imagefile,resp_detect_faces)
-        detect_labels(collectionid,bucketname,imagefile)
+        #multiple_faces(collectionid,bucketname,imagefile,resp_detect_faces)
+        #detect_labels(collectionid,bucketname,imagefile)
       else
         puts "Single face in image"
-        search_faces_by_image(collectionid,bucketname,imagefile)
-        detect_labels(collectionid,bucketname,imagefile)
+        #search_faces_by_image(collectionid,bucketname,imagefile)
+        #detect_labels(collectionid,bucketname,imagefile)
       end if
 
       render "show"
