@@ -359,26 +359,26 @@ end
       #
       #
       bucketname="idorabucket"
-      clientrek = Aws::Rekognition::Client.new
-      puts "####### On press of Match button"
-      @image = Image.find(params[:id])
-      @user = User.find(@image.user_id)
-      collectionid=@user.collectionid
-      puts " collectionid" + collectionid
-      picture = @image.picture.path.split("/").last
-      imagefile="uploads/image/picture/" +  Rails.env + "/" + @user.unique_id.to_s + "/" + picture.to_s
-      puts imagefile
-
-      resp_detect_faces = clientrek.detect_faces({
-        image: {
-          s3_object: {
-              bucket: bucketname,
-              name: imagefile,
-          },
-       },
-       })
-      puts "Number of faces [" + resp_detect_faces.face_details.count.to_s + "]"
-
+    #  clientrek = Aws::Rekognition::Client.new
+    #  puts "####### On press of Match button"
+    #  @image = Image.find(params[:id])
+    #  @user = User.find(@image.user_id)
+    #  collectionid=@user.collectionid
+    #  puts " collectionid" + collectionid
+    #  picture = @image.picture.path.split("/").last
+    #  imagefile="uploads/image/picture/" +  Rails.env + "/" + @user.unique_id.to_s + "/" + picture.to_s
+    #  puts imagefile
+#
+#      resp_detect_faces = clientrek.detect_faces({
+#        image: {
+#          s3_object: {
+#              bucket: bucketname,
+#              name: imagefile,
+#          },
+#       },
+#       })
+#      puts "Number of faces [" + resp_detect_faces.face_details.count.to_s + "]"
+#
       if resp_detect_faces.face_details.count < 1
         puts "No faces in image"
         #detect_labels(collectionid,bucketname,imagefile)
