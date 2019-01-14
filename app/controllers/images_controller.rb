@@ -359,40 +359,40 @@ end
       #
       #
       bucketname="idorabucket"
-    #  clientrek = Aws::Rekognition::Client.new
-    #  puts "####### On press of Match button"
-    #  @image = Image.find(params[:id])
-    #  @user = User.find(@image.user_id)
-    #  collectionid=@user.collectionid
-    #  puts " collectionid" + collectionid
-    #  picture = @image.picture.path.split("/").last
-    #  imagefile="uploads/image/picture/" +  Rails.env + "/" + @user.unique_id.to_s + "/" + picture.to_s
-    #  puts imagefile
-#
-#      resp_detect_faces = clientrek.detect_faces({
-#        image: {
-#          s3_object: {
-#              bucket: bucketname,
-#              name: imagefile,
-#          },
-#       },
-#       })
-#      puts "Number of faces [" + resp_detect_faces.face_details.count.to_s + "]"
-#
-    #  if resp_detect_faces.face_details.count < 1
-    #    puts "No faces in image"
-    #    #detect_labels(collectionid,bucketname,imagefile)
-    #  elsif resp_detect_faces.face_details.count > 1
-    #    puts "Multiple faces in image"
-    #    #multiple_faces(collectionid,bucketname,imagefile,resp_detect_faces)
-    #    #detect_labels(collectionid,bucketname,imagefile)
-    #  else
-    #    puts "Single face in image"
-    #    #search_faces_by_image(collectionid,bucketname,imagefile)
-    #    #detect_labels(collectionid,bucketname,imagefile)
-    #  end if
-#
-#      render "show"
+      clientrek = Aws::Rekognition::Client.new
+      puts "####### On press of Match button"
+      @image = Image.find(params[:id])
+      @user = User.find(@image.user_id)
+      collectionid=@user.collectionid
+      puts " collectionid" + collectionid
+      picture = @image.picture.path.split("/").last
+      imagefile="uploads/image/picture/" +  Rails.env + "/" + @user.unique_id.to_s + "/" + picture.to_s
+      puts imagefile
+
+      resp_detect_faces = clientrek.detect_faces({
+        image: {
+          s3_object: {
+              bucket: bucketname,
+              name: imagefile,
+          },
+       },
+       })
+      puts "Number of faces [" + resp_detect_faces.face_details.count.to_s + "]"
+
+      if resp_detect_faces.face_details.count < 1
+        puts "No faces in image"
+        detect_labels(collectionid,bucketname,imagefile)
+      elsif resp_detect_faces.face_details.count > 1
+        puts "Multiple faces in image"
+        multiple_faces(collectionid,bucketname,imagefile,resp_detect_faces)
+        detect_labels(collectionid,bucketname,imagefile)
+      else
+        puts "Single face in image"
+        search_faces_by_image(collectionid,bucketname,imagefile)
+        detect_labels(collectionid,bucketname,imagefile)
+      end if
+
+      render "show"
   end
 
   private
