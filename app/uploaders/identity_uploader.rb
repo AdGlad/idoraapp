@@ -3,7 +3,7 @@ class IdentityUploader < CarrierWave::Uploader::Base
   # include CarrierWave::RMagick
   include CarrierWave::MiniMagick
   #process resize_to_limit: [500, 500]
-  #process resize_to_limit: [300, 300]
+  process resize_to_limit: [300, 300]
   process :fix_exif_rotation
 
     storage :fog

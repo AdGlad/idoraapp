@@ -4,7 +4,7 @@ class PictureUploader < CarrierWave::Uploader::Base
    include CarrierWave::MiniMagick
 
   #process resize_to_limit: [500, 500]
-  #process resize_to_limit: [300, 300]
+  process resize_to_limit: [300, 300]
   process :fix_exif_rotation
 
   # Choose what kind of storage to use for this uploader:
