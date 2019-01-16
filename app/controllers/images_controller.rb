@@ -161,15 +161,36 @@ def multiple_faces(collectionid,bucketname,imagefile,resp)
     #
     ## Calculate dimensions for bounding box
     #
-    left = imagewidth *  face.bounding_box.left - (0.1 * imagewidth *  face.bounding_box.width)
-    top = imageheight * face.bounding_box.top - (0.1 * imageheight *  face.bounding_box.height)
-    width = imagewidth * face.bounding_box.width * 1.2
-    height = imageheight * face.bounding_box.height * 1.2
+
+
+    #left = imagewidth * face.bounding_box.left - (0.1 * imagewidth *  face.bounding_box.left)
+    #top = imageheight * face.bounding_box.top - (0.1 * imageheight *  face.bounding_box.height)
+    #width = imagewidth * face.bounding_box.width * 1.2
+    #height = imageheight * face.bounding_box.height * 1.2
+
+    #left = face.bounding_box.left.to_s
+    #top = face.bounding_box.top.to_s
+    #width = face.bounding_box.width.to_s
+    #height = face.bounding_box.height.to_s
+    #
+    left = imagewidth*face.bounding_box.left - (0.1 * imagewidth *face.bounding_box.width)
+    top = imageheight*face.bounding_box.top - (0.1 * imageheight *face.bounding_box.height)
+    width = imagewidth*face.bounding_box.width * 1.2
+    height = imageheight*face.bounding_box.height * 1.2
+
+    puts "left  [" + left.to_s  + "]"
+    puts "top  [" + top.to_s  + "]"
+    puts "width  [" + width.to_s  + "]"
+    puts "height  [" + height.to_s  + "]"
+
     cropdimensions = width.to_i.to_s + "x" + height.to_i.to_s + "+" + left.to_i.to_s + "+" + top.to_i.to_s
+    puts "cropdimensions [" +  cropdimensions + "]"
+
     #
     ## Make box bigger to include more face and crop image
     #
     resizedimensions = (2*width).to_i.to_s + "x" + (2*height).to_i.to_s 
+    localImage.auto_orient
     localImage.crop cropdimensions
     localImage.resize('612x612')
     #faceCropImageFilename = "/tmp/"+ face_number.to_s + "_"  + source_picture  

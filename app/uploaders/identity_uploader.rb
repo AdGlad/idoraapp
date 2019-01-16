@@ -4,6 +4,7 @@ class IdentityUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
   #process resize_to_limit: [500, 500]
   #process resize_to_limit: [300, 300]
+  process :fix_exif_rotation
 
     storage :fog
 
@@ -108,4 +109,9 @@ class IdentityUploader < CarrierWave::Uploader::Base
   #   process resize_to_fit: [50, 50]
   # end
 
+  def fix_exif_rotation #this is my attempted solution
+    manipulate! do |img|
+      img = img.auto_orient
+    end
+  end
 end
