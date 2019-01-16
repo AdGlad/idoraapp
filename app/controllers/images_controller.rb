@@ -173,10 +173,10 @@ def multiple_faces(collectionid,bucketname,imagefile,resp)
     #width = face.bounding_box.width.to_s
     #height = face.bounding_box.height.to_s
     #
-    left = imagewidth*face.bounding_box.left - (0.1 * imagewidth *face.bounding_box.width)
-    top = imageheight*face.bounding_box.top - (0.1 * imageheight *face.bounding_box.height)
-    width = imagewidth*face.bounding_box.width * 1.2
-    height = imageheight*face.bounding_box.height * 1.2
+    left = imagewidth*face.bounding_box.left - (0.3 * imagewidth *face.bounding_box.width)
+    top = imageheight*face.bounding_box.top - (0.3 * imageheight *face.bounding_box.height)
+    width = imagewidth*face.bounding_box.width * 1.6
+    height = imageheight*face.bounding_box.height * 1.6
 
     puts "left  [" + left.to_s  + "]"
     puts "top  [" + top.to_s  + "]"

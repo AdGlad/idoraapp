@@ -12,7 +12,7 @@
   <tbody>
     <% @images.each do |image| %>
       <tr>
-      <td><%= link_to image_tag(image.picture.url, :rwidth=>"10", :rheight=>"10" ), image_path(image) %></td>
+      <td><%= link_to image_tag(image.picture.url, size: "200x200",:rwidth=>"10", :rheight=>"10" ), image_path(image) %></td>
       <td>
           <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
                       image_path(image),
