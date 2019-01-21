@@ -3,8 +3,8 @@ class SearchesController < ApplicationController
 
 def new
   @search=Search.new
-  @tags=Tag.pluck(:name)
-  @identities=Identity.pluck(:name)
+  @tags=Tag.order(name: :asc).pluck(:name)
+  @identities=Identity.order(name: :asc).pluck(:name)
 end
 
 def create
