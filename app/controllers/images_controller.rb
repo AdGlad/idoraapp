@@ -7,46 +7,53 @@ class ImagesController < ApplicationController
 def detect_labels(collectionname,bucketname,sourcefilename)
 client = Aws::Rekognition::Client.new
 
-resp = client.detect_labels({
-  image: {
-    s3_object: {
-        bucket: bucketname,
-        name: sourcefilename,
+begin
+  resp = client.detect_labels({
+    image: {
+      s3_object: {
+          bucket: bucketname,
+          name: sourcefilename,
+      },
     },
-  },
-  max_labels:10
-})
-
-puts "*********************"
-puts resp.to_h
-puts "*********************"
-
-  image_id = @image.id
-  resp.labels.each do |label|
-    puts "#{label.name}-#{label.confidence.to_i}"
-    tagname=label.name
-
-    if not tagname.empty?
-      if not Tag.exists?(name:tagname)
-        Tag.create(name:tagname, tag_type:"AWS", desc:tagname)
-        puts "Creating tag record"
-      else
-        puts "Tag record already exists"
-      end
+    max_labels:10
+  })
   
-      tagrec=Tag.where(name:tagname).first
+  puts "*********************"
+  puts resp.to_h
+  puts "*********************"
   
-      if not ImageTag.exists?(image_id: image_id, tag_id: tagrec.id)
-        @image.tags << tagrec
-        puts "Creating tag matchrecord"
-      else
-        puts "Tag Match record already exists"
+    image_id = @image.id
+    resp.labels.each do |label|
+      puts "#{label.name}-#{label.confidence.to_i}"
+      tagname=label.name
+  
+      if not tagname.empty?
+        if not Tag.exists?(name:tagname)
+          Tag.create(name:tagname, tag_type:"AWS", desc:tagname)
+          puts "Creating tag record"
+        else
+          puts "Tag record already exists"
+        end
+    
+        tagrec=Tag.where(name:tagname).first
+    
+        if not ImageTag.exists?(image_id: image_id, tag_id: tagrec.id)
+          @image.tags << tagrec
+          puts "Creating tag matchrecord"
+        else
+          puts "Tag Match record already exists"
+        end
       end
     end
+  
+  @image.scene_matched= resp.to_h
+  #rescue  Aws::Rekognition::Errors::InvalidParameterException => e
+  rescue Aws::Rekognition::Errors::ServiceError => e
+    puts "error rescued"
+    puts "Exception Class: #{ e.class.name }"
+    puts "Exception Message: #{ e.message }"
+    #puts "Exception Backtrace: #{ e.backtrace }"
   end
-
-@image.scene_matched= resp.to_h
-
 end
 
 def create_face_match_record(matchedfaceid,match_response)
@@ -226,32 +233,37 @@ def search_faces_by_image(collectionname,bucketname,sourcefilename)
   puts "[" + bucketname + "]"
   puts "[" + sourcefilename + "]"
   puts "########################################################################"
-  
-  resp = client.search_faces_by_image({
-    collection_id: collectionname,
-    face_match_threshold: 60,
-    image: {
-      s3_object: {
-          bucket: bucketname,
-          name: sourcefilename,
+  begin 
+    resp = client.search_faces_by_image({
+      collection_id: collectionname,
+      face_match_threshold: 60,
+      image: {
+        s3_object: {
+            bucket: bucketname,
+            name: sourcefilename,
+        },
       },
-    },
-    max_faces:10
-    })
-
-#   rescue Aws::Rekognition::Errors::ServiceError
-
-    if resp.face_matches.count > 0
-      resp.face_matches.each do |face_matches|
-        puts "Image face matched. Creating match record"
-        create_face_match_record(face_matches.face.face_id,resp)
-      end
-    else
-       puts "No image face matched. Creating new identity"
-       puts "sourcefilename" + sourcefilename
-       create_identity_from_image(collectionname,bucketname,sourcefilename)
-    end
+      max_faces:10
+      })
   
+  
+      if resp.face_matches.count > 0
+        resp.face_matches.each do |face_matches|
+          puts "Image face matched. Creating match record"
+          create_face_match_record(face_matches.face.face_id,resp)
+        end
+      else
+         puts "No image face matched. Creating new identity"
+         puts "sourcefilename" + sourcefilename
+         create_identity_from_image(collectionname,bucketname,sourcefilename)
+      end
+  #rescue  Aws::Rekognition::Errors::InvalidParameterException => e
+  rescue Aws::Rekognition::Errors::ServiceError => e
+    puts "error rescued"
+    puts "Exception Class: #{ e.class.name }"
+    puts "Exception Message: #{ e.message }"
+    #puts "Exception Backtrace: #{ e.backtrace }"
+  end 
 end
 
 def multiple_search_faces_by_image(collectionname,bucketname,sourcefilename,localImage)
@@ -264,32 +276,37 @@ def multiple_search_faces_by_image(collectionname,bucketname,sourcefilename,loca
   puts "[" + sourcefilename + "]"
   puts "########################################################################"
   
-  resp = client.search_faces_by_image({
-    collection_id: collectionname,
-    face_match_threshold: 60,
-    image: {
-      s3_object: {
-          bucket: bucketname,
-          name: sourcefilename,
+  begin 
+    resp = client.search_faces_by_image({
+      collection_id: collectionname,
+      face_match_threshold: 60,
+      image: {
+        s3_object: {
+            bucket: bucketname,
+            name: sourcefilename,
+        },
       },
-    },
-    max_faces:10
-    })
-
-#   rescue Aws::Rekognition::Errors::ServiceError
-
-    if resp.face_matches.count > 0
-      resp.face_matches.each do |face_matches|
-        puts "Image face matched. Creating match record"
-        create_face_match_record(face_matches.face.face_id,resp)
-      end
-    else
-       puts "No image face matched. Creating new identity"
-       puts "sourcefilename" + sourcefilename
-       #create_identity_from_image(collectionname,bucketname,sourcefilename)
-       multiple_create_identity_from_image(collectionname,bucketname,sourcefilename,localImage)
-    end
+      max_faces:10
+      })
   
+      if resp.face_matches.count > 0
+        resp.face_matches.each do |face_matches|
+          puts "Image face matched. Creating match record"
+          create_face_match_record(face_matches.face.face_id,resp)
+        end
+      else
+         puts "No image face matched. Creating new identity"
+         puts "sourcefilename" + sourcefilename
+         #create_identity_from_image(collectionname,bucketname,sourcefilename)
+         multiple_create_identity_from_image(collectionname,bucketname,sourcefilename,localImage)
+      end
+  #rescue  Aws::Rekognition::Errors::InvalidParameterException => e
+  rescue Aws::Rekognition::Errors::ServiceError => e
+    puts "error rescued"
+    puts "Exception Class: #{ e.class.name }"
+    puts "Exception Message: #{ e.message }"
+    #puts "Exception Backtrace: #{ e.backtrace }"
+   end 
 end
 
   #
