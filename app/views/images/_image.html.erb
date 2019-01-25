@@ -6,20 +6,14 @@
   <thead>
     <tr>
       <th><%= model_class.human_attribute_name(:picture) %></th>
-      <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
   <tbody>
-    <% @images.each do |image| %>
+    <% @images.each_slice(3) do |image| %>
       <tr>
-      <td><%= link_to image_tag(image.picture.url, size: "200x200",:rwidth=>"10", :rheight=>"10" ), image_path(image) %></td>
-      <td>
-          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-                      image_path(image),
-                      :method => :delete,
-                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-                      :class => 'btn btn-xs btn-danger' %>
-        </td>
+         <% image.each do |image| %>
+          <td><%= link_to image_tag(image.picture.url ,:width=>"200" ), image_path(image) %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

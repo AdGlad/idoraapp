@@ -3,6 +3,7 @@ class SearchesController < ApplicationController
 
 def new
   @search=Search.new
+  #@search.user_id = current_user.id
   @tags=Tag.order(name: :asc).pluck(:name)
   @identities=Identity.order(name: :asc).pluck(:name)
 end

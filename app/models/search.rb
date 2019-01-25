@@ -22,6 +22,9 @@ def search_images
   puts "#############"
   puts "Search_images"
   puts idparams + tagparams 
+  #puts "user_id" + user_id 
+  #@current_user ||= User.find(session[:user_id])
+  #puts "current_user.id" + current_user.id.to_s
   puts "#############"
 
   if idparams == "ids[]"
@@ -47,9 +50,6 @@ def search_images
 
 
   end
-
-
-
 
   if tagparams == "tags[]"
    puts "No tags"
