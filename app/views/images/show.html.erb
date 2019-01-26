@@ -1,7 +1,7 @@
 <%- model_class = Image -%>
 <dl class="dl-horizontal">
 <dt></dt>
-<dd><%= image_tag(@image.picture.url, size: "200x200") if @image.picture? %></dd>
+<dd><%= image_tag(@image.picture.url, class: "img-responsive" ) if @image.picture? %></dd>
 </dl>
 <% if @image.identities.any? %>
   <p> Identity Matches: <%= render @image.identities %></p>
