@@ -5,7 +5,7 @@ def new
   @search=Search.new
   @search.user_id = current_user.id
   @tags=Tag.order(name: :asc).pluck(:name)
-  @identities=Identity.order(name: :asc).pluck(:name)
+  @identities=Identity.where(user_id: current_user.id).order(name: :asc).pluck(:name)
 end
 
 def create
@@ -16,7 +16,7 @@ end
 def show
   @search=Search.find(params[:id])
   # puts "##### Show #####"
-  #@search.user_id = current_user.id
+  @search.user_id = current_user.id
    #puts "current_user.id" + current_user.id.to_s
   #@search=Search.paginate(page: params[:page], per_page: 5).where(id: params[:id])
   #@search=Search.where(id: params[:id]).paginate(page: params[:page], per_page: 5)

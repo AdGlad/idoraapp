@@ -36,12 +36,12 @@ def search_images
    if id1 != ""
      idjoinstring1  =" inner join image_identities as ii1 on ii1.image_id=images.id
                        inner join identities id1 on ii1.identity_id=id1.id  "
-     idwherestring1 = " and  id1.user_id = 1 and  id1.name = "  + "'" + id1 + "'" 
+     idwherestring1 = " and  id1.user_id = " + self.user_id.to_s + " and  id1.name = "  + "'" + id1 + "'" 
    end
    if id2 != ""
      idjoinstring2  =" inner join image_identities as ii2 on ii2.image_id=images.id
                        inner join identities id2 on ii2.identity_id=id2.id  "
-     idwherestring2 = " and  id2.user_id = 1 and  id2.name = "  + "'" + id2 + "'" 
+     idwherestring2 = " and  id2.user_id = " + self.user_id.to_s + " and  id2.name = "  + "'" + id2 + "'" 
    end 
 
   idjoinstring  = [idjoinstring1 ,  idjoinstring2  ].join
@@ -86,7 +86,7 @@ def search_images
 
   puts "tagjoinstring[" +  tagjoinstring + "]"
   puts "tagwherestring[" +  tagwherestring + "]"
-  wherestring = " where images.user_id=1 " 
+  wherestring = " where images.user_id=" + self.user_id.to_s + " " 
 
   sqlstring = idjoinstring + tagjoinstring  + wherestring + idwherestring + tagwherestring
   puts sqlstring 
