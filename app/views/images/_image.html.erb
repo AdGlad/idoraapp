@@ -12,7 +12,7 @@
     <% @images.each_slice(3) do |image| %>
       <tr>
          <% image.each do |image| %>
-          <td><%= link_to image_tag(image.picture.url ,:width=>"200" ), image_path(image) %></td>
+          <td><%= link_to image_tag(image.picture.url ,class: "img-responsive" ), image_path(image) %></td>
         <% end %>
       </tr>
     <% end %>

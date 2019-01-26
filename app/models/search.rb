@@ -22,7 +22,7 @@ def search_images
   puts "#############"
   puts "Search_images"
   puts idparams + tagparams 
-  #puts "user_id" + user_id 
+  puts "user_id" + user_id.to_s
   #@current_user ||= User.find(session[:user_id])
   #puts "current_user.id" + current_user.id.to_s
   puts "#############"

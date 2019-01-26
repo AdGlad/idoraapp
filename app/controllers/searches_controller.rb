@@ -3,7 +3,7 @@ class SearchesController < ApplicationController
 
 def new
   @search=Search.new
-  #@search.user_id = current_user.id
+  @search.user_id = current_user.id
   @tags=Tag.order(name: :asc).pluck(:name)
   @identities=Identity.order(name: :asc).pluck(:name)
 end
@@ -28,7 +28,7 @@ end
     end
 
     def search_params
-      params.require(:search).permit(:idwc, :id1, :id2, :tagwc, :tag1, :tag2, :tag3, :tag4, :tag5)
+      params.require(:search).permit(:user_id,:idwc, :id1, :id2, :tagwc, :tag1, :tag2, :tag3, :tag4, :tag5)
     end
 
 end

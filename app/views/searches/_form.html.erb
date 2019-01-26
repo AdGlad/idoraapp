@@ -55,7 +55,6 @@
     <%= f.select  :tag4, options_for_select(@tags), :include_blank =>true , :class => 'form-control' %>
     </div>
   </div>
-
   <%= f.submit "Search", :class => 'btn btn-primary' %>
   <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
   searches_path, :class => 'btn btn-default' %>

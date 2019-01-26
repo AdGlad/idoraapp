@@ -315,6 +315,8 @@ end
   
 def index
   @images = Image.where(user_id: current_user.id).paginate(page: params[:page], per_page: 5)
+  puts "##### image index #####"
+  puts "##### image index #####"
 end
   
   # GET /images/1
