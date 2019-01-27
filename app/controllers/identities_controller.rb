@@ -12,7 +12,7 @@ class IdentitiesController < ApplicationController
   # GET /identities/1.json
   def show
      @identity = Identity.find(params[:id])
-     @images = @identity.images.paginate(page: params[:page], per_page: 5)
+     @images = @identity.images.where(user_id: current_user.id).paginate(page: params[:page], per_page: 5)
   end
 
   # GET /identities/new
