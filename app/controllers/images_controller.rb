@@ -314,7 +314,7 @@ end
     # GET /images.json
   
 def index
-  @images = Image.where(user_id: current_user.id).paginate(page: params[:page], per_page: 5)
+  @images = Image.where(user_id: current_user.id).paginate(page: params[:page], per_page: 15)
   puts "##### image index #####"
   puts "##### image index #####"
 end
@@ -322,7 +322,7 @@ end
   # GET /images/1
   # GET /images/1.json
   def show
-      @labels = Label.where(image_id: @image.id).paginate(page: params[:page], per_page: 5)
+      @labels = Label.where(image_id: @image.id).paginate(page: params[:page], per_page: 15)
   end
 
   # GET /images/new
